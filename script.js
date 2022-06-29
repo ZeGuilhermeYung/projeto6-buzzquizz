@@ -1,5 +1,5 @@
 
-function getAllQuizzOptions {
+function getAllQuizzOptions () {
     const allQuizz = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
     allQuizz.then (renderQuizzOptions);
     //allQuizz.catch(catchQuizzOptions);
