@@ -10,15 +10,18 @@ header{
     justify-content: center;
 }
 
-h1 {
+header h1 {
     font-size: 37px;
     font-weight: 700;
     color: #FFFFFF;
 }
 
-main {
+.screen1 {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 1050px;
+    margin: 0 auto 0 auto;
 }
 
 .createQuizz{
@@ -51,4 +54,41 @@ main {
     color: #EC362D;
     font-size: 21px;
     font-weight: 400px;
+}
+
+.allQuizz {
+    display: flex;
+    flex-direction: column;
+}
+
+.allQuizz h1{
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 80px;
+    align-self: flex-start;
+}
+
+.allQuizz .image{
+    height: 180px;
+    width: 340px;
+    margin-top: 12px;
+    border-radius: 5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url("https://johto.legiaodosherois.com.br/wp-content/uploads/2021/11/legiao_IdFmPnXrUVjJ.png");
+    position: relative;
+}
+
+.allQuizz p{
+    position: absolute;
+}
+
+.container{
+    align-self: flex-start;
+}
+
+.row{
+    display: flex;
+}
+
+.row div{
+    margin-right: 15px;
 }
