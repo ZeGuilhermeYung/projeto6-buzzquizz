@@ -5,7 +5,7 @@
 body{
     background-color:#FAFAFA;
     font-family: 'Roboto', sans-serif;
-    background-color: #FAFAFA;
+    margin-top: 70px;
 }
 
 header{
@@ -14,6 +14,10 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
 }
 
 header h1 {
@@ -21,7 +25,12 @@ header h1 {
     font-weight: 700;
     color: #FFFFFF;
 }
-.screen1.hidden, .screen2.hidden, .screen3.hidden {
+
+input{
+    all:unset;
+}
+
+.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden{
     display: none;
 }
 
@@ -228,15 +237,82 @@ header h1 {
     margin: 0 auto 0 auto;
 }
 
-.screen3 form{
-    width: 600px;
-    height: 256px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+.screen3_2{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 1100px;
+    margin: 0 auto 0 auto;
 }
 
-.screen3 h1{
-    margin-top: 70px;
+.screen3 form{
+    width: 600px;
+    margin-top: 71px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+
+.screen3 form ul{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+::placeholder{
+    color: #BABABA;
+    font-size: 19px;
+    font-weight: 400;
+    width: 100%;
+    text-align: center;
+}
+
+.screen3 h1,.screen3_2 h1{
+    font-size: 23px;
+    font-weight: 700;
+    margin-top: 28px; 
+}
+
+ul h1{
+    margin-top: 0;
     font-size: 23px;
     font-weight: 700;   
+    margin-bottom: 20px;
+}
+
+.firstUl li input{
+    width: 564px;
+    height: 46px;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    margin-top: 9px;
+}
+
+.secondUl li input{
+    width: 564px;
+    height: 46px;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    margin-top: 9px;
+}
+
+.submit{
+    margin-top: 85px;
+    background-color: #EC362D;
+    color: #FFFFFF;
+    border-radius: 15px;
+    width: 370px;
+    height: 54px;
+    text-align: center;
+}
+
+.questionForm{
+    width: 600px;
+    margin-top: 71px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items:center;
+    justify-content: center;
 }
