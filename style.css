@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
     font-family: 'Roboto', sans-serif;
 }
@@ -18,15 +22,16 @@ header h1 {
 .screen1.hidden, .screen2.hidden, .screen3.hidden {
     display: none;
 }
+
 .screen1 {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 1050px;
+    width: 1100px;
     margin: 0 auto 0 auto;
 }
 
-.createQuizz{
+.createQuizzEmpety{
     margin-top: 77px;
     width: 1100px;
     height: 181px;
@@ -38,7 +43,7 @@ header h1 {
     align-items: center;
 }
 
-.createQuizz p {
+.createQuizzEmpety p {
     font-size: 20px;
     font-weight: 400;
     color: #B9B9B9;
@@ -46,7 +51,7 @@ header h1 {
     text-align: center;
 }
 
-.createQuizz button{
+.createQuizzEmpety button{
     all:unset;
     width: 151px;
     height: 40px;
@@ -56,6 +61,34 @@ header h1 {
     color: #EC362D;
     font-size: 21px;
     font-weight: 400px;
+}
+
+.createQuizz{
+    margin-top: 70px;
+    align-self: flex-start;
+    width: 100%;
+    display: none;
+}
+
+.createQuizzTop{
+    display: flex;
+    align-items: center;
+}
+
+.createQuizz ion-icon{
+    width: 30px;
+    color:red;
+    margin-left: 20px;
+}
+
+.createQuizz h1{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.rowMyQuizz{
+    display: flex;
+    justify-content: space-between;
 }
 
 .allQuizz {
@@ -73,11 +106,11 @@ header h1 {
 .image2{
     z-index: -1;
     width: 340px;
+    height: 180px;
     margin-top: 12px;
     border-radius: 5px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url("https://johto.legiaodosherois.com.br/wp-content/uploads/2021/11/legiao_IdFmPnXrUVjJ.png");
     background-size: cover;
-    object-fit: contain;
+    object-fit: cover;
     position: relative;
 }
 
@@ -109,11 +142,6 @@ header h1 {
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
-.row div{
-    margin-right: 15px;
-}
-
 /* ///////////////////// Segunda tela /////////////////// */
 
 .banner {

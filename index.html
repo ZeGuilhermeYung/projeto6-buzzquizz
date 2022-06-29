@@ -21,10 +21,21 @@
     </header>
 
     <main>
-        <section class="screen1 hidden">
-            <div class="createQuizz">
+        <section class="screen1">
+            <div class="createQuizzEmpety">
                 <p>Você não criou nenhum quiz ainda :(</p>
                 <button>Criar Quizz</button>
+            </div>
+
+            <div class="createQuizz">
+                <div class="createQuizzTop">
+                    <h1>Seus Quizzes</h1><ion-icon name="add-circle-sharp"></ion-icon>
+                </div>
+                <div class="rowMyQuizz">
+                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
+                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
+                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
+                </div>
             </div>
 
             <div class="container">
@@ -36,15 +47,16 @@
             </div>
         </section>
 
-        <section class="screen2">
+        <section class="screen2 hidden">
             <div class="banner">
                 <h1>O quão Potterhead é você?</h1>
             </div>
 
         </section>
     </main>
-    
-    <script src="script.js"></script>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
 </body>
