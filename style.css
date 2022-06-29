@@ -13,6 +13,7 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 70px;
 }
 
 header h1 {
@@ -179,13 +180,17 @@ input{
 
 .screen3 form{
     width: 600px;
-    height: 356px;
     margin-top: 71px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items:center;
     justify-content: center;
+}
+
+ul{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 ::placeholder{
@@ -197,9 +202,16 @@ input{
 }
 
 .screen3 h1{
-    margin-top: 70px;
+    font-size: 23px;
+    font-weight: 700;
+    margin-top: 28px; 
+}
+
+ul h1{
+    margin-top: 0;
     font-size: 23px;
     font-weight: 700;   
+    margin-bottom: 20px;
 }
 
 .firstUl li input{
@@ -218,4 +230,14 @@ input{
     width: 370px;
     height: 54px;
     text-align: center;
+}
+
+.questionForm{
+    width: 600px;
+    margin-top: 71px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items:center;
+    justify-content: center;
 }
