@@ -5,7 +5,6 @@
 body{
     background-color:#FAFAFA;
     font-family: 'Roboto', sans-serif;
-    background-color: #FAFAFA;
 }
 
 header{
@@ -21,6 +20,12 @@ header h1 {
     font-weight: 700;
     color: #FFFFFF;
 }
+
+input{
+    all:unset;
+}
+
+
 .screen1.hidden, .screen2.hidden, .screen3.hidden {
     display: none;
 }
@@ -175,13 +180,43 @@ header h1 {
 
 .screen3 form{
     width: 600px;
-    height: 256px;
+    height: 356px;
+    margin-top: 71px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+
+::placeholder{
+    color: #BABABA;
+    font-size: 19px;
+    font-weight: 400;
+    width: 100%;
+    text-align: center;
 }
 
 .screen3 h1{
     margin-top: 70px;
     font-size: 23px;
     font-weight: 700;   
+}
+
+.firstUl li input{
+    width: 564px;
+    height: 46px;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    margin-top: 9px;
+}
+
+.submit{
+    margin-top: 85px;
+    background-color: #EC362D;
+    color: #FFFFFF;
+    border-radius: 15px;
+    width: 370px;
+    height: 54px;
+    text-align: center;
 }
