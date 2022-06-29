@@ -2,10 +2,9 @@ const allQuizz = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quiz
 allQuizz.then(renderQuizz)
 
 function renderQuizz(info){
-    const obj = info.data;
     const quizzSpace = document.querySelector(".row")
-
-    for(let i = 0; i <= obj.length; i++){
-        quizzSpace.innerHTML += `<div class="divImg"><img class="image2" src="https://johto.legiaodosherois.com.br/wp-content/uploads/2021/11/legiao_IdFmPnXrUVjJ.png"><p>${obj.title}</p></div>`
+    
+    for(let i = 0; i < info.data.length; i++){
+        quizzSpace.innerHTML += `<div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>`
     }
 }
