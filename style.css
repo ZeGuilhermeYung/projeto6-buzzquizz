@@ -160,3 +160,19 @@ header h1 {
     line-height: 46px;
     color: #FFFFFF;
 }
+
+/* //////////////////////// Terceira Tela ///////////////*/
+
+.screen3{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 1100px;
+    margin: 0 auto 0 auto;
+}
+
+.screen3 h1{
+    margin-top: 70px;
+    font-size: 23px;
+    font-weight: 700;   
+}
