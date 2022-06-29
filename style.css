@@ -26,7 +26,7 @@ input{
     all:unset;
 }
 
-.screen1.hidden, .screen2.hidden, .screen3.hidden {
+.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden{
     display: none;
 }
 
@@ -178,6 +178,14 @@ input{
     margin: 0 auto 0 auto;
 }
 
+.screen3_2{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 1100px;
+    margin: 0 auto 0 auto;
+}
+
 .screen3 form{
     width: 600px;
     margin-top: 71px;
@@ -201,7 +209,7 @@ ul{
     text-align: center;
 }
 
-.screen3 h1{
+.screen3 h1,.screen3_2 h1{
     font-size: 23px;
     font-weight: 700;
     margin-top: 28px; 
@@ -215,6 +223,14 @@ ul h1{
 }
 
 .firstUl li input{
+    width: 564px;
+    height: 46px;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    margin-top: 9px;
+}
+
+.secondUl li input{
     width: 564px;
     height: 46px;
     border: 1px solid #D1D1D1;
