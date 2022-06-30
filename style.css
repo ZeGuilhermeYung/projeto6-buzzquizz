@@ -22,7 +22,7 @@ header{
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1;
+    z-index: 4;
 }
 
 header h1 {
@@ -147,12 +147,6 @@ input{
     height: 100%;
     object-fit: cover;
 }
-.divImg:hover p {
-    text-decoration: underline;
-    opacity: 0.8;
-    transition: all 0.5s linear;
-}
-
 .divImg p{
     position: absolute;
     bottom: 0;
@@ -164,6 +158,11 @@ input{
     margin-bottom: 7px;
     font-size: 19px;
     font-weight: 400;
+}
+.divImg:hover p {
+    text-decoration: underline;
+    opacity: 0.8;
+    transition: all 0.5s linear;
 }
 
 .container{
@@ -186,19 +185,24 @@ input{
 .banner {
     width: 100%;
     height: 227px;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57));
-    background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .banner h1 {
     font-weight: 400;
     font-size: 39px;
     line-height: 46px;
     color: #FFFFFF;
+    text-decoration: center;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+.questions {
+    margin: 42px 0;
 }
 .question {
     width: 759px;
@@ -206,7 +210,7 @@ input{
     background-color: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     padding: 28px 37px 36px 37px;
-    margin-top: 42px;
+    margin-bottom: 42px;
     display: flex;
     flex-direction: column;
     align-items: center;

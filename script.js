@@ -28,15 +28,11 @@ function getQuizz(quizz) {
 }
 
 function displayQuizz(selectedQuizz) {
-    console.log(selectedQuizz.data);
-  const backImg = `url(${selectedQuizz.data.image})`;
-  document.querySelector(".screen2").innerHTML = `
-    <div class="banner" style="background-image: ${backImg};">
-        <h1>${selectedQuizz.data.title}</h1>
-    </div>`;
+  document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
+  document.querySelector(".banner").style.backgroundImage = `linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${selectedQuizz.data.image})`;
   selectedQuizz.data.questions.sort(scrambleAlternatives);
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
-    document.querySelector(".screen2").innerHTML += `
+    document.querySelector(".questions").innerHTML += `
         <div class="question ord${i}">
             <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
                 <h2>${selectedQuizz.data.questions[i].title}</h2>
