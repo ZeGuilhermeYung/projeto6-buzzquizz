@@ -3,9 +3,7 @@ function getAllQuizzOptions () {
     allQuizz.then (renderQuizzOptions);
     //allQuizz.catch(catchQuizzOptions);
 }
-
 getAllQuizzOptions();
-
 function renderQuizzOptions (info) {
     const quizzSpace = document.querySelector(".row");   
     for (let i = 0; i < info.data.length; i++) {
@@ -16,13 +14,11 @@ function renderQuizzOptions (info) {
         </div>`;
     }
 }
-
 function getQuizz (quizz) {
     const id = quizz.id;
     const quizzID = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
     quizzID.then (displayQuizz);
 }
-
 function displayQuizz (selectedQuizz) {
     const backImg = `url(${selectedQuizz.data.image})`;
     document.querySelector(".screen2").innerHTML = `
@@ -53,11 +49,9 @@ function displayQuizz (selectedQuizz) {
     document.querySelector(".screen1").classList.add("hidden");
     document.querySelector(".screen2.hidden").classList.remove("hidden");
 }
-
 function scrambleAlternatives () { 
 	return Math.random() - 0.5; 
 }
-
 function isCorrect(alternative) {
     if (alternative === true) {
         return "right";
@@ -67,8 +61,8 @@ function isCorrect(alternative) {
 }
 //Js Perguntas
 function questionMaker(){
-    const quizzDetails = document.querySelectorAll("input")
-    let preQuizz = {title:"",image:"",numberOfQuestions:"",numberOfLevels:""}
+    const quizzDetails = document.querySelectorAll("input");
+    let preQuizz = {title:"",image:"",numberOfQuestions:"",numberOfLevels:""};
 
     preQuizz.title = quizzDetails[0].value;
     preQuizz.image = quizzDetails[1].value;
