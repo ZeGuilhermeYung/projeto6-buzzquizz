@@ -33,7 +33,7 @@ input{
     all:unset;
 }
 
-.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden{
+.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden, .screen3_3.hidden{
     display: none;
 }
 
@@ -164,6 +164,12 @@ input{
 }
 /* ///////////////////// Segunda tela /////////////////// */
 
+.screen2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .banner {
     width: 100%;
     height: 227px;
@@ -180,12 +186,13 @@ input{
     line-height: 46px;
     color: #FFFFFF;
 }
-
 .question {
     width: 759px;
     height: 676px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    padding: 28px 37px 36px 37px;
+    margin-top: 42px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,6 +202,7 @@ input{
     height: 138px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .question-title h2 {
     font-weight: 700;
@@ -206,6 +214,7 @@ input{
 .answer-options {
     width: 688px;
     height: 410px;
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -213,7 +222,7 @@ input{
 }
 .alternative {
     width: 330px;
-    height: 217px;
+    height: 240px;
 }
 .alternative img {
     width: 100%;
@@ -232,7 +241,7 @@ input{
 
 /* //////////////////////// Terceira Tela ///////////////*/
 
-.screen3{
+.screen3, .screen3_2, .screen3_3{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -240,13 +249,13 @@ input{
     margin: 0 auto 0 auto;
 }
 
-.screen3_2{
+/*.screen3_2{
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 1100px;
     margin: 0 auto 0 auto;
-}
+}*/
 
 .screen3 form{
     width: 600px;
@@ -271,7 +280,7 @@ input{
     text-align: center;
 }
 
-.screen3 h1,.screen3_2 h1{
+.screen3 h1,.screen3_2 h1, .screen3_3 h1{
     font-size: 23px;
     font-weight: 700;
     margin-top: 28px; 
@@ -284,7 +293,7 @@ ul h1{
     margin-bottom: 20px;
 }
 
-.firstUl li input{
+.firstUl li input,.secondUl li input,.thirdUl li input{
     width: 564px;
     height: 46px;
     border: 1px solid #D1D1D1;
@@ -292,13 +301,13 @@ ul h1{
     margin-top: 9px;
 }
 
-.secondUl li input{
+/*.secondUl li input{
     width: 564px;
     height: 46px;
     border: 1px solid #D1D1D1;
     border-radius: 5px;
     margin-top: 9px;
-}
+}*/
 
 .submit{
     margin-top: 85px;
