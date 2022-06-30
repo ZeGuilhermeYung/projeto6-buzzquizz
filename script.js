@@ -77,7 +77,9 @@ function answerQuestion(alternative, order) {
     } else {
         alternative.classList.add("clicked");
         alternative.parentNode.classList.add("show-answer");
-        
+        setTimeout(() => {
+            document.querySelector(`.ord${order + 1}`).scrollIntoView();
+        }, 2000)
     }
 }
 //Js Perguntas
