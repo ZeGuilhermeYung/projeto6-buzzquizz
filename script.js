@@ -1,14 +1,14 @@
 
-function getAllQuizzOptions() {
+function getAllQuizzOptions () {
     const allQuizz = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
-    allQuizz.then(renderQuizzOptions);
+    allQuizz.then (renderQuizzOptions);
     //allQuizz.catch(catchQuizzOptions);
 }
 
 getAllQuizzOptions();
 
-function renderQuizzOptions(info) {
-    const quizzSpace = document.querySelector(".row");
+function renderQuizzOptions (info) {
+    const quizzSpace = document.querySelector(".row");   
     for (let i = 0; i < info.data.length; i++) {
         quizzSpace.innerHTML += `
         <div class="divImg" id="${info.data[i].id}" onclick="getQuizz(this);">
@@ -18,13 +18,13 @@ function renderQuizzOptions(info) {
     }
 }
 
-function getQuizz(quizz) {
+function getQuizz (quizz) {
     const id = quizz.id;
     const quizzID = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
-    quizzID.then(displayQuizz);
+    quizzID.then (displayQuizz);
 }
 
-function displayQuizz(selectedQuizz) {
+function displayQuizz (selectedQuizz) {
     const backImg = `url(${selectedQuizz.data.image})`;
     document.querySelector(".screen2").innerHTML = `
     <div class="banner" style="background-image: ${backImg};">
@@ -46,8 +46,13 @@ function displayQuizz(selectedQuizz) {
                 <img src="${selectedQuizz.data.questions[i].answers[j].image}" alt="">
                 <h3>${selectedQuizz.data.questions[i].answers[j].text}</h3>
             </div>`;
-        }
+        }  
     }
+    document.querySelector(".screen2").innerHTML +=
+        `</div>
+    </div>`;
+    document.querySelector(".screen1").classList.add("hidden");
+    document.querySelector(".screen2.hidden").classList.remove("hidden");
 }
 
 function scrambleAlternatives () { 
