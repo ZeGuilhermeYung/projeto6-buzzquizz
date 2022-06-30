@@ -67,6 +67,9 @@ function isCorrect(alternative) {
 }
 //Js Perguntas
 let obj
+let quizz = []
+let questionsTitleAndColor = []
+let questionAnswer = []
 
 function questionMaker(){
     const quizzDetails = document.querySelectorAll(".preQuizz")
@@ -77,6 +80,9 @@ function questionMaker(){
     preQuizz.image = quizzDetails[1].value;
     preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
     preQuizz.numberOfLevels = Number(quizzDetails[3].value);
+
+    quizz.push(preQuizz.tittle)
+    quizz.push(preQuizz.image)
 
     const screen = document.querySelector(".screen3");
     screen.classList.add("hidden");
@@ -90,36 +96,58 @@ function questionMaker(){
         questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="question" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
     }
 }
 
+function grabQuestions(){
 
+    let answers = []
 
+    for(let i = 0; i < obj.numberOfQuestions; i++){
+        const title = document.querySelectorAll(`.question${i + 1}`)
+        const color = document.querySelectorAll(`questionColor${i + 1}`)
 
+        const texts = document.querySelectorAll(`.questionAnswer${i +1}`)
+        const url = document.querySelectorAll(`.questionURL${i + 1}`)
+        
+        let answer = {
+            text: texts[i].value,
+            image: url[i].value,
+            isCorrectAnswer: false,
+        }
+
+        if(i === 0){
+            answer.isCorrectAnswer = true
+        }
+
+        answers.push(answer)
+    
+    }
+}
 
 function levelMaker(){
 
@@ -145,6 +173,157 @@ function levelMaker(){
         `
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function validateURL(url) {
     const rule =
