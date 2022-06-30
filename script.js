@@ -49,28 +49,36 @@ function displayQuizz(selectedQuizz) {
   document.querySelector(".screen1").classList.add("hidden");
   document.querySelector(".screen2.hidden").classList.remove("hidden");
 }
-function displayAlternatives (question, order) {
-    question.sort(scrambleAlternatives);
+function displayAlternatives (alternatives, order) {
+    alternatives.sort(scrambleAlternatives);
     for (let j = 0; j < 4; j++) {
-        let isRightOrWrong = isCorrect(question[j].isCorrectAnswer);
+        let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
         document.querySelector(`.question.ord${order} .answer-options`).innerHTML += `
-            <div class="alternative ${isRightOrWrong}">
-                <img src="${question[j].image}" alt="">
-                <h3>${question[j].text}</h3>
+            <div class="alternative ${isRightOrWrong}" onclick="answerQuestion(this, ${order});">
+                <img src="${alternatives[j].image}" alt="">
+                <h3>${alternatives[j].text}</h3>
             </div>`;
     }
 }
-
 function scrambleAlternatives() {
   return Math.random() - 0.5;
 }
-
 function isCorrect(alternative) {
   if (alternative === true) {
     return "right";
   } else {
     return "wrong";
   }
+}
+
+function answerQuestion(alternative, order) {
+    if (document.querySelector(`.ord${order} .answer-options.show-answer`) !== null) {
+        return;
+    } else {
+        alternative.classList.add("clicked");
+        alternative.parentNode.classList.add("show-answer");
+        
+    }
 }
 //Js Perguntas
 let obj;

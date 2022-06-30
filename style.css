@@ -220,9 +220,29 @@ input{
     align-items: center;
     justify-content: space-between;
 }
+.answer-options.show-answer .alternative {
+    cursor: auto;
+    opacity: 0.3;
+}
+.answer-options.show-answer .alternative.clicked {
+    opacity: 1;
+}
+.answer-options.show-answer .right h3{
+    color:#009C22;
+}
+.answer-options.show-answer .wrong h3{
+    color:#FF4B4B;
+}
 .alternative {
     width: 330px;
     height: 240px;
+    cursor: pointer;
+}
+.alternative:hover img {
+    box-shadow: 0 0 10px gray;
+}
+.answer-options.show-answer .alternative:hover img {
+    box-shadow: none;
 }
 .alternative img {
     width: 100%;
@@ -237,6 +257,12 @@ input{
     display: flex;
     align-items: center;
     color: #000000;
+}
+.alternative:hover h3 {
+    text-decoration: underline;
+}
+.answer-options.show-answer .alternative:hover h3 {
+    text-decoration: none;
 }
 
 /* //////////////////////// Terceira Tela ///////////////*/
