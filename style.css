@@ -123,7 +123,6 @@ input{
     z-index: -1;
     width: 340px;
     height: 180px;
-    margin-top: 12px;
     border-radius: 5px;
     background-size: cover;
     object-fit: cover;
@@ -135,16 +134,18 @@ input{
     height: 181px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 12px;
     background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
     position: relative;
+}
+.divImg:hover {
+    box-shadow: 0 0 10px gray;
+    transition: all 0.3s ease-in;
 }
 .divImg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-.divImg:hover img {
-    box-shadow: 0 0 10px gray;
 }
 .divImg:hover p {
     text-decoration: underline;
@@ -187,7 +188,8 @@ input{
     height: 227px;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57));
     background-size: cover;
-    object-fit: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,6 +254,7 @@ input{
 }
 .alternative:hover img {
     box-shadow: 0 0 10px gray;
+    transition: all 0.3s ease-in;
 }
 .answer-options.show-answer .alternative:hover img {
     box-shadow: none;
