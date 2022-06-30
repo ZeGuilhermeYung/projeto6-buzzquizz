@@ -133,10 +133,10 @@ function levelMaker(){
         levelList.innerHTML += `
         <ul>
             <li><h1>Nível ${i + 1}</h1></li>
-            <li><input class="question" type="text" placeholder="Título do nível" required></li>
-            <li><input class="question" type="text" placeholder="% de acerto mínima" required></li>
-            <li><input class="question" type="text" placeholder="URL da imagem do nível" required></li>
-            <li><input class="question" type="text" placeholder="Descrição do nível" required></li>
+            <li><input class="level" type="text" placeholder="Título do nível" required></li>
+            <li><input class="level" type="text" placeholder="% de acerto mínima" required></li>
+            <li><input class="level" type="text" placeholder="URL da imagem do nível" required></li>
+            <li><input class="level" type="text" placeholder="Descrição do nível" required></li>
         </ul>
         `
     }
