@@ -28,22 +28,23 @@ function getQuizz(quizz) {
 }
 
 function displayQuizz(selectedQuizz) {
-  document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
-  document.querySelector(".banner").style.backgroundImage = `linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${selectedQuizz.data.image})`;
-  selectedQuizz.data.questions.sort(scrambleAlternatives);
-  for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
-    document.querySelector(".questions").innerHTML += `
-        <div class="question ord${i}">
-            <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
-                <h2>${selectedQuizz.data.questions[i].title}</h2>
-            </div>
-            <div class="answer-options">
-            </div>
-        </div>`;
-    displayAlternatives(selectedQuizz.data.questions[i].answers, i);
-  }
-  document.querySelector(".screen1").classList.add("hidden");
-  document.querySelector(".screen2.hidden").classList.remove("hidden");
+    document.querySelector(".questions").innerHTML = "";
+    document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
+    document.querySelector(".banner").style.backgroundImage = `linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${selectedQuizz.data.image})`;
+    selectedQuizz.data.questions.sort(scrambleAlternatives);
+    for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
+        document.querySelector(".questions").innerHTML += `
+            <div class="question ord${i}">
+                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
+                    <h2>${selectedQuizz.data.questions[i].title}</h2>
+                </div>
+                <div class="answer-options">
+                </div>
+            </div>`;
+        displayAlternatives(selectedQuizz.data.questions[i].answers, i);
+    }
+    document.querySelector(".screen1").classList.add("hidden");
+    document.querySelector(".screen2.hidden").classList.remove("hidden");
 }
 function displayAlternatives (alternatives, order) {
     alternatives.sort(scrambleAlternatives);
