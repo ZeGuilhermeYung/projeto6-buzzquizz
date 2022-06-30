@@ -198,8 +198,8 @@ input{
     font-size: 39px;
     line-height: 46px;
     color: #FFFFFF;
-    text-decoration: center;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    text-shadow: 0px 0px 20px black;
 }
 .questions {
     margin: 42px 0;
@@ -257,7 +257,7 @@ input{
     cursor: pointer;
 }
 .alternative:hover img {
-    box-shadow: 0 0 10px gray;
+    box-shadow: 0 0 15px gray;
     transition: all 0.3s ease-in;
 }
 .answer-options.show-answer .alternative:hover img {
