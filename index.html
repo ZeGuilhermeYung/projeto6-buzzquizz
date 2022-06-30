@@ -25,25 +25,21 @@
     </header>
 
     <main>
-      <section class="screen1 hidden">
-        <div class="createQuizzEmpty">
-          <p>Você não criou nenhum quiz ainda :(</p>
-          <button>Criar Quizz</button>
-        </div>
-
-        <div class="createQuizz hidden">
-          <div class="createQuizzTop">
-            <h1>Seus Quizzes</h1>
-            <ion-icon name="add-circle-sharp"></ion-icon>
-          </div>
-          <div class="rowMyQuizz">
-            <div class="divImg">
-              <img class="image2" src="${info.data[i].image}" />
-              <p>${info.data[i].title}</p>
+        <section class="screen1 hidden">
+            <div class="createQuizzEmpty">
+                <p>Você não criou nenhum quiz ainda :(</p>
+                <button>Criar Quizz</button>
             </div>
-            <div class="divImg">
-              <img class="image2" src="${info.data[i].image}" />
-              <p>${info.data[i].title}</p>
+
+            <div class="createQuizz hidden">
+                <div class="createQuizzTop">
+                    <h1>Seus Quizzes</h1><ion-icon name="add-circle-sharp"></ion-icon>
+                </div>
+                <div class="rowMyQuizz">
+                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
+                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
+                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
+                </div>
             </div>
             <div class="divImg">
               <img class="image2" src="${info.data[i].image}" />
@@ -136,7 +132,7 @@
         />
       </section>
 
-<<<<<<< HEAD
+
       <section class="screen3_2 hidden">
         <h1 class>Crie suas perguntas</h1>
         <form class="questionForm">
@@ -149,7 +145,7 @@
           onclick="levelMaker()"
         />
       </section>
-=======
+
         </section>
 
         <section class="screen3_2 hidden">
@@ -158,7 +154,7 @@
                 <ul class="secondUl">
                 </ul>      
             </form>
-            <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="levelMaker()">
+            <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="levelMaker();grabQuestions()">
         </section>
 
         <section class="screen3_3 hidden">
@@ -169,7 +165,16 @@
             </form>
             <input class='submit' type="submit" value="Finalizar Quizz" onclick="levelMaker()">
         </section>
->>>>>>> 9af1fb008738a1a61df23d72d09c8618dc44dfaf
+
+        <section class="screen3_3 hidden">
+            <h1 class>Agora, decida os níveis</h1>
+            <form class="questionForm">
+                <ul class="thirdUl">
+                </ul>      
+            </form>
+            <input class='submit' type="submit" value="Finalizar Quizz" onclick="levelMaker()">
+        </section>
+
 
       <section class="screen3_3 hidden">
         <h1 class>Agora, decida os níveis</h1>
@@ -185,15 +190,10 @@
       </section>
     </main>
 
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="script.js"></script>
+</body>
+
 </html>
