@@ -3,7 +3,9 @@ function getAllQuizzOptions () {
     allQuizz.then (renderQuizzOptions);
     //allQuizz.catch(catchQuizzOptions);
 }
+
 getAllQuizzOptions();
+
 function renderQuizzOptions (info) {
     const quizzSpace = document.querySelector(".row");   
     for (let i = 0; i < info.data.length; i++) {
@@ -14,11 +16,13 @@ function renderQuizzOptions (info) {
         </div>`;
     }
 }
+
 function getQuizz (quizz) {
     const id = quizz.id;
     const quizzID = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
     quizzID.then (displayQuizz);
 }
+
 function displayQuizz (selectedQuizz) {
     const backImg = `url(${selectedQuizz.data.image})`;
     document.querySelector(".screen2").innerHTML = `
@@ -49,9 +53,11 @@ function displayQuizz (selectedQuizz) {
     document.querySelector(".screen1").classList.add("hidden");
     document.querySelector(".screen2.hidden").classList.remove("hidden");
 }
+
 function scrambleAlternatives () { 
 	return Math.random() - 0.5; 
 }
+
 function isCorrect(alternative) {
     if (alternative === true) {
         return "right";
@@ -60,9 +66,12 @@ function isCorrect(alternative) {
     }
 }
 //Js Perguntas
+let obj
+
 function questionMaker(){
-    const quizzDetails = document.querySelectorAll("input");
-    let preQuizz = {title:"",image:"",numberOfQuestions:"",numberOfLevels:""};
+    const quizzDetails = document.querySelectorAll(".preQuizz")
+    let preQuizz = {title:"",image:"",numberOfQuestions:"",numberOfLevels:""}
+    obj = preQuizz
 
     preQuizz.title = quizzDetails[0].value;
     preQuizz.image = quizzDetails[1].value;
@@ -73,7 +82,7 @@ function questionMaker(){
     screen.classList.add("hidden");
 
     const newScreen = document.querySelector(".screen3_2");
-    newScreen.classList.remove("hidden");
+    newScreen.classList.remove("hidden");   
 
     const questionList = document.querySelector(".secondUl");
 
@@ -81,29 +90,54 @@ function questionMaker(){
         questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="question" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input type="text" placeholder="Resposta Correta" required></li>
-                        <li><input type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input type="text" placeholder="Resposta Correta" required></li>
-                        <li><input type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input type="text" placeholder="Resposta Correta" required></li>
-                        <li><input type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input type="text" placeholder="Resposta Correta" required></li>
-                        <li><input type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="question" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="question" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
+    }
+}
+
+function levelMaker(){
+
+    levels = obj.numberOfLevels
+
+    const screen = document.querySelector(".screen3_2")
+    screen.classList.add("hidden")
+
+    const newScreen = document.querySelector(".screen3_3")
+    newScreen.classList.remove("hidden")
+
+    const levelList = document.querySelector(".thirdUl")
+
+    for(let i = 0; i < levels; i++){
+        levelList.innerHTML += `
+        <ul>
+            <li><h1>Nível ${i + 1}</h1></li>
+            <li><input class="question" type="text" placeholder="Título do nível" required></li>
+            <li><input class="question" type="text" placeholder="% de acerto mínima" required></li>
+            <li><input class="question" type="text" placeholder="URL da imagem do nível" required></li>
+            <li><input class="question" type="text" placeholder="Descrição do nível" required></li>
+        </ul>
+        `
     }
 }
