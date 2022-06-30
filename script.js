@@ -220,3 +220,16 @@ function registerInitialQuizzValues() {
   preQuizz.numberOfQuestions = parseInt(numberOfQuestions);
   preQuizz.numberOfLevels = parseInt(numberOfLevels);
 }
+function validateInitialQuizzValues() {
+  if (preQuizz.title.length < 20 || preQuizz.title.length > 65) {
+    return false;
+  } else if (!validateURL(preQuizz.image)) {
+    return false;
+  } else if (preQuizz.numberOfQuestions < 3) {
+    return false;
+  } else if (preQuizz.numberOfLevels < 2) {
+    return false;
+  }
+
+  return true;
+}
