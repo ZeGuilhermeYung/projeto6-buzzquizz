@@ -21,13 +21,13 @@
     </header>
 
     <main>
-        <section class="screen1">
+        <section class="screen1 hidden">
             <div class="createQuizzEmpty">
                 <p>Você não criou nenhum quiz ainda :(</p>
                 <button>Criar Quizz</button>
             </div>
 
-            <div class="createQuizz">
+            <div class="createQuizz hidden">
                 <div class="createQuizzTop">
                     <h1>Seus Quizzes</h1><ion-icon name="add-circle-sharp"></ion-icon>
                 </div>
@@ -76,14 +76,14 @@
             </div>
         </section>
 
-        <section class="screen3 hidden">
+        <section class="screen3">
             <h1>Comece pelo começo</h1>
             <form>
                 <ul class="firstUl">
-                    <li><input type="text" placeholder="Título do seu Quizz" required></li>
-                    <li><input type="text" placeholder="URL da imagem do seu quizz" required></li>
-                    <li><input type="text" placeholder="Quantidade de perguntas do quizz" required></li>
-                    <li><input type="text" placeholder="Quantidade de níveis do quizz" required></li>
+                    <li><input class = "preQuizz" type="text" placeholder="Título do seu Quizz" required></li>
+                    <li><input class = "preQuizz" type="text" placeholder="URL da imagem do seu quizz" required></li>
+                    <li><input class = "preQuizz" type="text" placeholder="Quantidade de perguntas do quizz" required></li>
+                    <li><input class = "preQuizz" type="text" placeholder="Quantidade de níveis do quizz" required></li>
                 </ul>      
             </form>
 
@@ -97,7 +97,16 @@
                 <ul class="secondUl">
                 </ul>      
             </form>
-            <input class='submit' type="submit" value="AAAAAAAA">
+            <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="levelMaker()">
+        </section>
+
+        <section class="screen3_3 hidden">
+            <h1 class>Agora, decida os níveis</h1>
+            <form class="questionForm">
+                <ul class="thirdUl">
+                </ul>      
+            </form>
+            <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="levelMaker()">
         </section>
 
     </main>
@@ -108,5 +117,4 @@
 <script src="script.js"></script>
 </body>
 
-</html>createQuizzEmpety
-createQuizzEmpety
+</html>

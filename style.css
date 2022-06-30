@@ -33,7 +33,7 @@ input{
     all:unset;
 }
 
-.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden{
+.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden, .screen3_3.hidden{
     display: none;
 }
 
@@ -232,7 +232,7 @@ input{
 
 /* //////////////////////// Terceira Tela ///////////////*/
 
-.screen3{
+.screen3, .screen3_2, .screen3_3{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -240,13 +240,13 @@ input{
     margin: 0 auto 0 auto;
 }
 
-.screen3_2{
+/*.screen3_2{
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 1100px;
     margin: 0 auto 0 auto;
-}
+}*/
 
 .screen3 form{
     width: 600px;
@@ -271,7 +271,7 @@ input{
     text-align: center;
 }
 
-.screen3 h1,.screen3_2 h1{
+.screen3 h1,.screen3_2 h1, .screen3_3 h1{
     font-size: 23px;
     font-weight: 700;
     margin-top: 28px; 
@@ -284,7 +284,7 @@ ul h1{
     margin-bottom: 20px;
 }
 
-.firstUl li input{
+.firstUl li input,.secondUl li input,.thirdUl li input{
     width: 564px;
     height: 46px;
     border: 1px solid #D1D1D1;
@@ -292,13 +292,13 @@ ul h1{
     margin-top: 9px;
 }
 
-.secondUl li input{
+/*.secondUl li input{
     width: 564px;
     height: 46px;
     border: 1px solid #D1D1D1;
     border-radius: 5px;
     margin-top: 9px;
-}
+}*/
 
 .submit{
     margin-top: 85px;
