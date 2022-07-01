@@ -90,6 +90,14 @@ let quizz = [];
 let questionsTitleAndColor = [];
 let questionAnswer = [];
 
+function createQuizz(){
+  const screen = document.querySelector(".screen1")
+  screen.classList.add("hidden")
+
+  const newScreen = document.querySelector(".screen3")
+  newScreen.classList.remove("hidden")
+}
+
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
   let preQuizz = {

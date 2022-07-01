@@ -35,7 +35,7 @@ input{
     all:unset;
 }
 
-.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden, .screen3_3.hidden{
+.screen1.hidden, .screen2.hidden, .screen3.hidden , .screen3_2.hidden, .screen3_3.hidden, .createQuizz.hidden, .createQuizzEmpty.hidden{
     display: none;
 }
 
