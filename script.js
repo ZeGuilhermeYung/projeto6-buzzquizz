@@ -155,9 +155,7 @@ function questionMaker() {
   }
 }
 
-function grabQuestions() {
-  // const title = document.querySelectorAll(`.question${i + 1}`);
-  // const color = document.querySelectorAll(`questionColor${i + 1}`);
+function grabAnswers() {
   let allAnswers = []
   for (let i = 0; i < obj.numberOfQuestions; i++) {
     let answers = []
@@ -168,16 +166,16 @@ function grabQuestions() {
       let answer = {
         text: texts[i].value,
         image: url[i].value,
-        isCorrectAnswer: false,
+        isCorrectAnswer: i === 0 ? true : false,
       };
-
-      if (i === 0) {
-        answer.isCorrectAnswer = true;
-      }
+      //if (i === 0) {
+      //  answer.isCorrectAnswer = true;
+      // }
       answers.push(answer)
     }
     allAnswers.push(answers)
   }
+  console.log(allAnswers)
 }
 
 function levelMaker() {
