@@ -283,6 +283,105 @@ input{
 .answer-options.show-answer .alternative:hover h3 {
     text-decoration: none;
 }
+.score-screen {
+    width: 759px;
+    margin-bottom: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.score-screen.hidden {
+    display: none;
+}
+.score {
+    width: 100%;
+    height: 430px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    padding: 18px;
+}
+.score-result {
+    width: 100%;
+    height: 99px;
+    background: #EC362D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.score-result h2 {
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 27px;
+    color: #FFFFFF;
+}
+.image-text {
+    width: 100%;
+    height: 273px;
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.image-text img {
+    width: 364px;
+    height: 100%;
+    object-fit: cover;
+}
+.image-text h3 {
+    width: 328px;
+    height: 100%;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 25px;
+    color: #484848;
+}
+.restart-quizz {
+    width: 260.38px;
+    height: 52px;
+    background: #EC362D;
+    cursor: pointer;
+    border-radius: 15px;
+    margin: 57px 0 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.restart-quizz:hover {
+    filter: brightness(90%);
+    transition: all 0.3s ease-in;
+}
+.restart-quizz:active {
+    box-shadow: inset 0 0 10px rgb(138, 0, 0);
+}
+.restart-quizz h4 {
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    color: #FFF5F4;
+}
+.return-screen1 {
+    width: 220px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.return-screen1:hover {
+    filter: brightness(90%);
+    transition: all 0.3s ease-in;
+}
+.return-screen1 h5 {
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    text-align: center;
+    color: #818181;
+}
+.return-screen1:active h5{
+    text-decoration: underline;
+}
+
 
 /* //////////////////////// Terceira Tela ///////////////*/
 

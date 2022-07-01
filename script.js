@@ -1,3 +1,5 @@
+let currentQuizz;
+
 function getAllQuizzOptions() {
   const allQuizz = axios.get(
     "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes"
@@ -28,23 +30,27 @@ function getQuizz(quizz) {
 }
 
 function displayQuizz(selectedQuizz) {
+    currentQuizz = selectedQuizz;
     document.querySelector(".questions").innerHTML = "";
     document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
     document.querySelector(".banner").style.backgroundImage = `linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${selectedQuizz.data.image})`;
     selectedQuizz.data.questions.sort(scrambleAlternatives);
     for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
         document.querySelector(".questions").innerHTML += `
-            <div class="question ord${i}">
+            <div class="question ord${i + 1}">
                 <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
                 </div>
                 <div class="answer-options">
                 </div>
             </div>`;
-        displayAlternatives(selectedQuizz.data.questions[i].answers, i);
+        displayAlternatives(selectedQuizz.data.questions[i].answers, i + 1);
     }
     document.querySelector(".screen1").classList.add("hidden");
-    document.querySelector(".screen2.hidden").classList.remove("hidden");
+    if (document.querySelector(".screen2.hidden") !== null){
+        document.querySelector(".screen2.hidden").classList.remove("hidden");
+    }
+    document.querySelector(".banner").scrollIntoView();
 }
 function displayAlternatives (alternatives, order) {
     alternatives.sort(scrambleAlternatives);
@@ -80,9 +86,39 @@ function answerQuestion(alternative, order, rightOrWrong) {
         alternative.classList.add("clicked");
         alternative.parentNode.classList.add("show-answer");
         setTimeout(() => {
-            document.querySelector(`.ord${order + 1}`).scrollIntoView();
+            if (document.querySelector(`.ord${order + 1}`) !== null) {
+                document.querySelector(`.ord${order + 1}`).scrollIntoView();
+            } else {
+                let finalScore = (rightAnswers/order * 100);
+                displayFinalScore(finalScore);
+                document.querySelector(".score").scrollIntoView();
+                rightAnswers = 0;
+            }   
         }, 2000)
     }
+}   
+function displayFinalScore (score) {
+    let scoreAverage = 0;
+    let levelIndex = 0;
+    for (i = 0; i < currentQuizz.data.levels.length; i++) {
+        if (score >= currentQuizz.data.levels[i].minValue && currentQuizz.data.levels[i].minValue >= scoreAverage) {
+            scoreAverage = currentQuizz.data.levels[i].minValue;
+            levelIndex = i; 
+        }
+    }
+    document.querySelector(".score-screen.hidden").classList.remove("hidden");
+    document.querySelector(".score-result h2").innerHTML = `${Math.round(score)}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
+    document.querySelector(".image-text img").src = currentQuizz.data.levels[levelIndex].image;
+    document.querySelector(".image-text h3").innerHTML = currentQuizz.data.levels[levelIndex].text;
+}
+function restartQuizz () {
+    document.querySelector(".score-screen").classList.add("hidden");
+    displayQuizz(currentQuizz);
+}
+function screen2ToScreen1 () {
+    document.querySelector(".score-screen").classList.add("hidden");
+    document.querySelector(".screen2").classList.add("hidden");
+    document.querySelector(".screen1.hidden").classList.remove("hidden");
 }
 //Js Perguntas
 let obj;
