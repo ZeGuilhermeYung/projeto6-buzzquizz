@@ -1,60 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
 
-    <title>BuzzQuizz</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 
-  <body>
-    <header>
-      <h1>BuzzQuizz</h1>
-    </header>
+  <title>BuzzQuizz</title>
+</head>
 
-    <main>
-        <section class="screen1">
-            <div class="createQuizzEmpty">
-                <p>Você não criou nenhum quiz ainda :(</p>
-                <button>Criar Quizz</button>
-            </div>
+<body>
+  <header>
+    <h1>BuzzQuizz</h1>
+  </header>
 
-            <div class="createQuizz hidden">
-                <div class="createQuizzTop">
-                    <h1>Seus Quizzes</h1><ion-icon name="add-circle-sharp"></ion-icon>
-                </div>
-                <div class="rowMyQuizz">
-                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
-                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
-                    <div class="divImg"><img class="image2" src="${info.data[i].image}"><p>${info.data[i].title}</p></div>
-                </div>
-            </div>
-            <div class="divImg">
-              <img class="image2" src="${info.data[i].image}"/>
-              <p>${info.data[i].title}</p>
-            </div>
-          </div>
+  <main>
+    <section class="screen1">
+      <div class="createQuizzEmpty">
+        <p>Você não criou nenhum quiz ainda :(</p>
+        <button onclick="createQuizz()">Criar Quizz</button>
+      </div>
+
+      <div class="container">
+        <div class="allQuizz">
+          <h1>Todos os Quizzes</h1>
+          <div class="row"></div>
         </div>
+      </div>
+    </section>
 
-        <div class="container">
-          <div class="allQuizz">
-            <h1>Todos os Quizzes</h1>
-            <div class="row"></div>
-          </div>
-        </div>
-      </section>
+    <section class="screen2 hidden">
+      <div class="banner">
+        <h1></h1>
+      </div>
+      <div class="questions"></div>
+      <div class="score"></div>
+    </section>
 
       <section class="screen2 hidden">
         <div class="banner">
@@ -73,115 +61,51 @@
             <div class="return-screen1" onclick="screen2ToScreen1 ();"><h5>Voltar pra home</h5></div>
         </div>
       </section>
+    <section class="screen3 hidden">
+      <h1>Comece pelo começo</h1>
+      <form>
+        <ul class="firstUl">
+          <li>
+            <input class="preQuizz title" type="text" placeholder="Título do seu Quizz" required />
+          </li>
+          <li>
+            <input class="preQuizz url" type="text" placeholder="URL da imagem do seu quizz" required />
+          </li>
+          <li>
+            <input class="preQuizz number-questions" type="text" placeholder="Quantidade de perguntas do quizz"
+              required />
+          </li>
+          <li>
+            <input class="preQuizz number-levels" type="text" placeholder="Quantidade de níveis do quizz" required />
+          </li>
+        </ul>
+      </form>
 
-      <section class="screen3 hidden">
-        <h1>Comece pelo começo</h1>
-        <form>
-          <ul class="firstUl">
-            <li>
-              <input
-                class="preQuizz title"
-                type="text"
-                placeholder="Título do seu Quizz"
-                required
-              />
-            </li>
-            <li>
-              <input
-                class="preQuizz url"
-                type="text"
-                placeholder="URL da imagem do seu quizz"
-                required
-              />
-            </li>
-            <li>
-              <input
-                class="preQuizz number-questions"
-                type="text"
-                placeholder="Quantidade de perguntas do quizz"
-                required
-              />
-            </li>
-            <li>
-              <input
-                class="preQuizz number-levels"
-                type="text"
-                placeholder="Quantidade de níveis do quizz"
-                required
-              />
-            </li>
-          </ul>
-        </form>
+      <input class="submit" type="submit" value="Prosseguir pra criar perguntas" onclick="questionMaker()" />
+    </section>
 
-        <input
-          class="submit"
-          type="submit"
-          value="Prosseguir pra criar perguntas"
-          onclick="questionMaker()"
-        />
-      </section>
+    <section class="screen3_2 hidden">
+      <h1 class>Crie suas perguntas</h1>
+      <form class="questionForm">
+        <ul class="secondUl">
+        </ul>
+      </form>
+      <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="grabAnswers();levelMaker();">
+    </section>
 
+    <section class="screen3_3 hidden">
+      <h1 class>Agora, decida os níveis</h1>
+      <form class="questionForm">
+        <ul class="thirdUl">
+        </ul>
+      </form>
+      <input class='submit' type="submit" value="Finalizar Quizz" onclick="levelMaker()">
+    </section>
 
-      <section class="screen3_2 hidden">
-        <h1 class>Crie suas perguntas</h1>
-        <form class="questionForm">
-          <ul class="secondUl"></ul>
-        </form>
-        <input
-          class="submit"
-          type="submit"
-          value="Proseguir para criar níveis"
-          onclick="levelMaker()"
-        />
-      </section>
-
-        </section>
-
-        <section class="screen3_2 hidden">
-            <h1 class>Crie suas perguntas</h1>
-            <form class="questionForm">
-                <ul class="secondUl">
-                </ul>      
-            </form>
-            <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="levelMaker();grabQuestions()">
-        </section>
-
-        <section class="screen3_3 hidden">
-            <h1 class>Agora, decida os níveis</h1>
-            <form class="questionForm">
-                <ul class="thirdUl">
-                </ul>      
-            </form>
-            <input class='submit' type="submit" value="Finalizar Quizz" onclick="levelMaker()">
-        </section>
-
-        <section class="screen3_3 hidden">
-            <h1 class>Agora, decida os níveis</h1>
-            <form class="questionForm">
-                <ul class="thirdUl">
-                </ul>      
-            </form>
-            <input class='submit' type="submit" value="Finalizar Quizz" onclick="levelMaker()">
-        </section>
-
-
-      <section class="screen3_3 hidden">
-        <h1 class>Agora, decida os níveis</h1>
-        <form class="questionForm">
-          <ul class="thirdUl"></ul>
-        </form>
-        <input
-          class="submit"
-          type="submit"
-          value="Proseguir para criar níveis"
-          onclick="levelMaker()"
-        />
-      </section>
-    </main>
-
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

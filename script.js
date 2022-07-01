@@ -52,16 +52,16 @@ function displayQuizz(selectedQuizz) {
     }
     document.querySelector(".banner").scrollIntoView();
 }
-function displayAlternatives (alternatives, order) {
-    alternatives.sort(scrambleAlternatives);
-    for (let j = 0; j < 4; j++) {
-        let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
-        document.querySelector(`.question.ord${order} .answer-options`).innerHTML += `
+function displayAlternatives(alternatives, order) {
+  alternatives.sort(scrambleAlternatives);
+  for (let j = 0; j < 4; j++) {
+    let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
+    document.querySelector(`.question.ord${order} .answer-options`).innerHTML += `
             <div class="alternative ${isRightOrWrong}" onclick="answerQuestion(this, ${order}, ${alternatives[j].isCorrectAnswer});">
                 <img src="${alternatives[j].image}" alt="">
                 <h3>${alternatives[j].text}</h3>
             </div>`;
-    }
+  }
 }
 function scrambleAlternatives() {
   return Math.random() - 0.5;
@@ -126,6 +126,14 @@ let quizz = [];
 let questionsTitleAndColor = [];
 let questionAnswer = [];
 
+function createQuizz() {
+  const screen = document.querySelector(".screen1")
+  screen.classList.add("hidden")
+
+  const newScreen = document.querySelector(".screen3")
+  newScreen.classList.remove("hidden")
+}
+
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
   let preQuizz = {
@@ -141,7 +149,7 @@ function questionMaker() {
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
 
-  quizz.push(preQuizz.tittle);
+  quizz.push(preQuizz.title);
   quizz.push(preQuizz.image);
 
   const screen = document.querySelector(".screen3");
@@ -156,74 +164,52 @@ function questionMaker() {
     questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${
-                          i + 1
-                        }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${
-                          i + 1
-                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 2" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 3" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
   }
 }
 
-function grabQuestions() {
-  let answers = [];
-
+function grabAnswers() {
+  let allAnswers = []
   for (let i = 0; i < obj.numberOfQuestions; i++) {
-    const title = document.querySelectorAll(`.question${i + 1}`);
-    const color = document.querySelectorAll(`questionColor${i + 1}`);
-
+    let answers = []
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
 
-    let answer = {
-      text: texts[i].value,
-      image: url[i].value,
-      isCorrectAnswer: false,
-    };
-
-    if (i === 0) {
-      answer.isCorrectAnswer = true;
+    for (let i = 0; i < texts.length; i++) {
+      let answer = {
+        text: texts[i].value,
+        image: url[i].value,
+        isCorrectAnswer: i === 0 ? true : false,
+      };
+      //if (i === 0) {
+      //  answer.isCorrectAnswer = true;
+      // }
+      answers.push(answer)
     }
-
-    answers.push(answer);
+    allAnswers.push(answers)
   }
 }
 
