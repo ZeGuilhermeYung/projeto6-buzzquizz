@@ -175,7 +175,6 @@ function grabAnswers() {
     }
     allAnswers.push(answers)
   }
-  console.log(allAnswers)
 }
 
 function levelMaker() {
