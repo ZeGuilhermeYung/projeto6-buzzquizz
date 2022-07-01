@@ -136,6 +136,7 @@ function screen2ToScreen1() {
   document.querySelector(".screen1.hidden").classList.remove("hidden");
 }
 //Js Perguntas
+let preQuizz;
 let obj;
 let quizz = [];
 let questionsTitleAndColor = [];
@@ -151,7 +152,7 @@ function createQuizz() {
 
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
-  let preQuizz = {
+  preQuizz = {
     title: "",
     image: "",
     numberOfQuestions: "",
@@ -307,4 +308,18 @@ function validateInitialQuizzValues() {
 function validateColor(color) {
   const rule = /^\#([0-9]|[A-F]|[a-f]){6}$/;
   return rule.test(color);
+}
+function registrarDadosNiveis() {
+  quizzCriado.levels = [];
+
+  for (let i = 0; i < quizzCriado.quantidadeNiveis; i++) {
+    const nivel = {
+      title: document.querySelector(`.nivel-${i}-titulo`).value,
+      minValue: parseInt(document.querySelector(`.nivel-${i}-acerto`).value),
+      image: document.querySelector(`.nivel-${i}-url`).value,
+      text: document.querySelector(`.nivel-${i}-descricao`).value,
+    };
+
+    quizzCriado.levels.push(nivel);
+  }
 }
