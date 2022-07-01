@@ -287,6 +287,29 @@ function registerLevelValues() {
     preQuizz.levels.push(level);
   }
 }
+function validateLevelValues() {
+  registerLevelValues();
+  let levelZero = false;
+
+  for (let i = 0; i < preQuizz.levels.length; i++) {
+    const level = preQuizz.levels[i];
+
+    if (level.minValue === 0) {
+      levelZero = true;
+    }
+
+    if (level.title.length < 10) {
+      return false;
+    } else if (level.minValue < 0 || level.minValue > 100) {
+      return false;
+    } else if (!validateURL(level.image)) {
+      return false;
+    } else if (level.text.length < 30) {
+      return false;
+    }
+  }
+  return levelZero;
+}
 function validateURL(url) {
   const rule =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
