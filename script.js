@@ -28,12 +28,12 @@ function getQuizz(quizz) {
 }
 
 function displayQuizz(selectedQuizz) {
-    document.querySelector(".questions").innerHTML = "";
-    document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
-    document.querySelector(".banner").style.backgroundImage = `linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${selectedQuizz.data.image})`;
-    selectedQuizz.data.questions.sort(scrambleAlternatives);
-    for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
-        document.querySelector(".questions").innerHTML += `
+  document.querySelector(".questions").innerHTML = "";
+  document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
+  document.querySelector(".banner").style.backgroundImage = `linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${selectedQuizz.data.image})`;
+  selectedQuizz.data.questions.sort(scrambleAlternatives);
+  for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
+    document.querySelector(".questions").innerHTML += `
             <div class="question ord${i}">
                 <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
@@ -41,16 +41,16 @@ function displayQuizz(selectedQuizz) {
                 <div class="answer-options">
                 </div>
             </div>`;
-        displayAlternatives(selectedQuizz.data.questions[i].answers, i);
-    }
-    document.querySelector(".screen1").classList.add("hidden");
-    document.querySelector(".screen2.hidden").classList.remove("hidden");
+    displayAlternatives(selectedQuizz.data.questions[i].answers, i);
+  }
+  document.querySelector(".screen1").classList.add("hidden");
+  document.querySelector(".screen2.hidden").classList.remove("hidden");
 }
-function displayAlternatives (alternatives, order) {
-    alternatives.sort(scrambleAlternatives);
-    for (let j = 0; j < 4; j++) {
-        let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
-        document.querySelector(`.question.ord${order} .answer-options`).innerHTML += `
+function displayAlternatives(alternatives, order) {
+  alternatives.sort(scrambleAlternatives);
+  for (let j = 0; j < 4; j++) {
+    let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
+    document.querySelector(`.question.ord${order} .answer-options`).innerHTML += `
             <div class="alternative ${isRightOrWrong}" onclick="answerQuestion(this, ${order}, ${alternatives[j].isCorrectAnswer});">
                 <img src="${alternatives[j].image}" alt="">
                 <h3>${alternatives[j].text}</h3>
@@ -71,18 +71,18 @@ function isCorrect(alternative) {
 let rightAnswers = 0;
 
 function answerQuestion(alternative, order, rightOrWrong) {
-    if (document.querySelector(`.ord${order} .answer-options.show-answer`) !== null) {
-        return;
-    } else {
-        if (rightOrWrong === true) {
-            rightAnswers++;
-        }
-        alternative.classList.add("clicked");
-        alternative.parentNode.classList.add("show-answer");
-        setTimeout(() => {
-            document.querySelector(`.ord${order + 1}`).scrollIntoView();
-        }, 2000)
+  if (document.querySelector(`.ord${order} .answer-options.show-answer`) !== null) {
+    return;
+  } else {
+    if (rightOrWrong === true) {
+      rightAnswers++;
     }
+    alternative.classList.add("clicked");
+    alternative.parentNode.classList.add("show-answer");
+    setTimeout(() => {
+      document.querySelector(`.ord${order + 1}`).scrollIntoView();
+    }, 2000)
+  }
 }
 //Js Perguntas
 let obj;
@@ -90,7 +90,7 @@ let quizz = [];
 let questionsTitleAndColor = [];
 let questionAnswer = [];
 
-function createQuizz(){
+function createQuizz() {
   const screen = document.querySelector(".screen1")
   screen.classList.add("hidden")
 
@@ -128,64 +128,55 @@ function questionMaker() {
     questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${i + 1
-      }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${i + 1
-      }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Incorreta 2" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Incorreta 3" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
   }
 }
 
 function grabQuestions() {
-  let answers = [];
-
+  // const title = document.querySelectorAll(`.question${i + 1}`);
+  // const color = document.querySelectorAll(`questionColor${i + 1}`);
+  let allAnswers = []
   for (let i = 0; i < obj.numberOfQuestions; i++) {
-    const title = document.querySelectorAll(`.question${i + 1}`);
-    const color = document.querySelectorAll(`questionColor${i + 1}`);
-
+    let answers = []
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
 
-    let answer = {
-      text: texts[i].value,
-      image: url[i].value,
-      isCorrectAnswer: false,
-    };
+    for (let i = 0; i < texts.length; i++) {
+      let answer = {
+        text: texts[i].value,
+        image: url[i].value,
+        isCorrectAnswer: false,
+      };
 
-    if (i === 0) {
-      answer.isCorrectAnswer = true;
+      if (i === 0) {
+        answer.isCorrectAnswer = true;
+      }
+      answers.push(answer)
     }
-
-    answers.push(answer);
+    allAnswers.push(answers)
   }
 }
 
