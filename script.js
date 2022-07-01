@@ -40,9 +40,8 @@ function displayQuizz(selectedQuizz) {
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
             <div class="question ord${i + 1}">
-                <div class="question-title" style="background-color:${
-                  selectedQuizz.data.questions[i].color
-                }">
+                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color
+      }">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
                 </div>
                 <div class="answer-options">
@@ -182,48 +181,38 @@ function questionMaker() {
     questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${
-                          i + 1
-                        }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${
-                          i + 1
-                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1
+      }" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1
+      }" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 2" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 3" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
   }
