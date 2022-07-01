@@ -113,7 +113,7 @@ function questionMaker() {
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
 
-  quizz.push(preQuizz.tittle);
+  quizz.push(preQuizz.title);
   quizz.push(preQuizz.image);
 
   const screen = document.querySelector(".screen3");
