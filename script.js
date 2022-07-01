@@ -274,6 +274,19 @@ function levelMaker() {
         `;
   }
 }
+function registerLevelValues() {
+  preQuizz.levels = [];
+  for (let i = 0; i < preQuizz.numberOfLevels; i++) {
+    const level = {
+      title: document.querySelector(`.level-${i}-title`).value,
+      minHit: parseInt(document.querySelector(`.level-${i}-minimum-hit`).value),
+      image: document.querySelector(`.level-${i}-url`).value,
+      text: document.querySelector(`.level-${i}-description`).value,
+    };
+
+    preQuizz.levels.push(level);
+  }
+}
 function validateURL(url) {
   const rule =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
