@@ -173,38 +173,28 @@ function questionMaker() {
     questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${i + 1
-      }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${i + 1
-      }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Incorreta 2" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1
-      }" type="text" placeholder="Resposta Incorreta 3" required></li>
-                        <li><input class="questionURL${i + 1
-      }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
   }
@@ -212,10 +202,16 @@ function questionMaker() {
 
 function grabAnswers() {
   let allAnswers = [];
+  let conjuntoResposta = []
+
   for (let i = 0; i < obj.numberOfQuestions; i++) {
     let answers = [];
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
+
+    const title = document.querySelector(`question${i + 1}`)
+    const color = document.querySelector(`questionColor${i + 1}`)
+
 
     for (let i = 0; i < texts.length; i++) {
       let answer = {
@@ -229,7 +225,14 @@ function grabAnswers() {
       answers.push(answer);
     }
     allAnswers.push(answers);
+    let question = {
+      title: title.value,
+      color: color.value,
+      answers: answers,
+    }
+    conjuntoResposta.push(question)
   }
+  console.log(conjuntoResposta)
 }
 
 function levelMaker() {
