@@ -40,9 +40,7 @@ function displayQuizz(selectedQuizz) {
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
             <div class="question ord${i + 1}">
-                <div class="question-title" style="background-color:${
-                  selectedQuizz.data.questions[i].color
-                }">
+                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
                 </div>
                 <div class="answer-options">
@@ -58,7 +56,7 @@ function displayQuizz(selectedQuizz) {
 }
 function displayAlternatives(alternatives, order) {
   alternatives.sort(scrambleAlternatives);
-  for (let j = 0; j < 4; j++) {
+  for (let j = 0; j < alternatives.length; j++) {
     let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
     document.querySelector(
       `.question.ord${order} .answer-options`
@@ -109,22 +107,15 @@ function displayFinalScore(score) {
   let scoreAverage = 0;
   let levelIndex = 0;
   for (i = 0; i < currentQuizz.data.levels.length; i++) {
-    if (
-      score >= currentQuizz.data.levels[i].minValue &&
-      currentQuizz.data.levels[i].minValue >= scoreAverage
-    ) {
+    if (score >= currentQuizz.data.levels[i].minValue && currentQuizz.data.levels[i].minValue >= scoreAverage) {
       scoreAverage = currentQuizz.data.levels[i].minValue;
       levelIndex = i;
     }
   }
   document.querySelector(".score-screen.hidden").classList.remove("hidden");
-  document.querySelector(".score-result h2").innerHTML = `${Math.round(
-    score
-  )}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
-  document.querySelector(".image-text img").src =
-    currentQuizz.data.levels[levelIndex].image;
-  document.querySelector(".image-text h3").innerHTML =
-    currentQuizz.data.levels[levelIndex].text;
+  document.querySelector(".score-result h2").innerHTML = `${Math.round(score)}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
+  document.querySelector(".image-text img").src = currentQuizz.data.levels[levelIndex].image;
+  document.querySelector(".image-text h3").innerHTML = currentQuizz.data.levels[levelIndex].text;
 }
 function restartQuizz() {
   document.querySelector(".score-screen").classList.add("hidden");
@@ -182,48 +173,38 @@ function questionMaker() {
     questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${
-                          i + 1
-                        }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${
-                          i + 1
-                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1
+      }" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1
+      }" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 2" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 3" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1
+      }" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${i + 1
+      }" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
   }
