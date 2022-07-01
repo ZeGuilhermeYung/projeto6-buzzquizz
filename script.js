@@ -157,6 +157,8 @@ function questionMaker() {
     image: "",
     numberOfQuestions: "",
     numberOfLevels: "",
+    questions: [],
+    levels: [],
   };
   obj = preQuizz;
 
@@ -310,7 +312,7 @@ function validateColor(color) {
   return rule.test(color);
 }
 function registrarDadosNiveis() {
-  quizzCriado.levels = [];
+  preQuizz.levels = [];
 
   for (let i = 0; i < quizzCriado.quantidadeNiveis; i++) {
     const nivel = {
