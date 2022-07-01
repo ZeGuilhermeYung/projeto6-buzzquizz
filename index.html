@@ -72,7 +72,7 @@
         </ul>
       </form>
 
-      <input class="submit" type="submit" value="Prosseguir pra criar perguntas" onclick="questionMaker()" />
+      <input class="submit" type="submit" value="Prosseguir pra criar perguntas" onclick="questionMaker();grabTitleAndImage()" />
     </section>
 
     <section class="screen3_2 hidden">
@@ -85,12 +85,23 @@
     </section>
 
     <section class="screen3_3 hidden">
-      <h1 class>Agora, decida os níveis</h1>
+      <h1>Agora, decida os níveis</h1>
       <form class="questionForm">
         <ul class="thirdUl">
         </ul>
       </form>
-      <input class='submit' type="submit" value="Finalizar Quizz" onclick="levelMaker()">
+      <input class='submit' type="submit" value="Finalizar Quizz" onclick="grabLevels();postQuizz()">
+    </section>
+
+    <section class="screen3_4 hidden">
+      <h1>Seu quizz está pronto!</h1>
+      <div class="divImg" onclick="">
+        <img id="quizzDoneImage" class="image2" src="">
+        <p id="quizzDoneTitle"></p>
+      </div>
+
+      <input class='submit' type="submit" value="Acessar Quizz" onclick="">
+
     </section>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

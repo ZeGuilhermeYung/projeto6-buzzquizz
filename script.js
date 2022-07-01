@@ -40,7 +40,8 @@ function displayQuizz(selectedQuizz) {
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
             <div class="question ord${i + 1}">
-                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color}">
+                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color
+      }">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
                 </div>
                 <div class="answer-options">
@@ -107,15 +108,22 @@ function displayFinalScore(score) {
   let scoreAverage = 0;
   let levelIndex = 0;
   for (i = 0; i < currentQuizz.data.levels.length; i++) {
-    if (score >= currentQuizz.data.levels[i].minValue && currentQuizz.data.levels[i].minValue >= scoreAverage) {
+    if (
+      score >= currentQuizz.data.levels[i].minValue &&
+      currentQuizz.data.levels[i].minValue >= scoreAverage
+    ) {
       scoreAverage = currentQuizz.data.levels[i].minValue;
       levelIndex = i;
     }
   }
   document.querySelector(".score-screen.hidden").classList.remove("hidden");
-  document.querySelector(".score-result h2").innerHTML = `${Math.round(score)}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
-  document.querySelector(".image-text img").src = currentQuizz.data.levels[levelIndex].image;
-  document.querySelector(".image-text h3").innerHTML = currentQuizz.data.levels[levelIndex].text;
+  document.querySelector(".score-result h2").innerHTML = `${Math.round(
+    score
+  )}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
+  document.querySelector(".image-text img").src =
+    currentQuizz.data.levels[levelIndex].image;
+  document.querySelector(".image-text h3").innerHTML =
+    currentQuizz.data.levels[levelIndex].text;
 }
 function restartQuizz() {
   document.querySelector(".score-screen").classList.add("hidden");
@@ -129,9 +137,12 @@ function screen2ToScreen1() {
 //Js Perguntas
 let preQuizz;
 let obj;
-let quizz = [];
-let questionsTitleAndColor = [];
-let questionAnswer = [];
+let quizz = {
+  title: "",
+  image: "",
+  questions: "",
+  levels: "",
+}
 
 function createQuizz() {
   const screen = document.querySelector(".screen1");
@@ -157,9 +168,6 @@ function questionMaker() {
   preQuizz.image = quizzDetails[1].value;
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
-
-  quizz.push(preQuizz.title);
-  quizz.push(preQuizz.image);
 
   const screen = document.querySelector(".screen3");
   screen.classList.add("hidden");
@@ -200,17 +208,25 @@ function questionMaker() {
   }
 }
 
+function grabTitleAndImage(){
+  const title = document.querySelector(".preQuizz.title")
+  const image = document.querySelector(".preQuizz.url")
+
+  quizz.title = title.value
+  quizz.image = image.value
+
+}
+
 function grabAnswers() {
-  let allAnswers = [];
-  let conjuntoResposta = []
+  let allAnswers = []
 
   for (let i = 0; i < obj.numberOfQuestions; i++) {
     let answers = [];
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
 
-    const title = document.querySelector(`question${i + 1}`)
-    const color = document.querySelector(`questionColor${i + 1}`)
+    const title = document.querySelector(`.question${i + 1}`);
+    const color = document.querySelector(`.questionColor${i + 1}`);
 
 
     for (let i = 0; i < texts.length; i++) {
@@ -219,44 +235,82 @@ function grabAnswers() {
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
-      //if (i === 0) {
-      //  answer.isCorrectAnswer = true;
-      // }
       answers.push(answer);
     }
-    allAnswers.push(answers);
     let question = {
       title: title.value,
       color: color.value,
       answers: answers,
     }
-    conjuntoResposta.push(question)
+    allAnswers.push(question)
   }
-  console.log(conjuntoResposta)
+  quizz.questions = allAnswers
 }
+
 
 function levelMaker() {
   levels = obj.numberOfLevels;
-
+  
   const screen = document.querySelector(".screen3_2");
   screen.classList.add("hidden");
-
+  
   const newScreen = document.querySelector(".screen3_3");
   newScreen.classList.remove("hidden");
-
+  
   const levelList = document.querySelector(".thirdUl");
-
+  
   for (let i = 0; i < levels; i++) {
     levelList.innerHTML += `
-        <ul>
+    <ul>
             <li><h1>Nível ${i + 1}</h1></li>
-            <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
-            <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
-            <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
-            <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
-        </ul>
-        `;
+            <li><input class="level-${i + 1}-title" type="text" placeholder="Título do nível" required></li>
+            <li><input class="level-${i + 1}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
+            <li><input class="level-${i + 1}-url" type="text" placeholder="URL da imagem do nível" required></li>
+            <li><input class="level-${i + 1}-description" type="text" placeholder="Descrição do nível" required></li>
+            </ul>
+            `;
   }
+}
+
+function grabLevels() {
+  let allLevels = []
+  
+  for(let i = 0; i < obj.numberOfLevels; i++){
+    const title = document.querySelector(`.level-${i + 1}-title`)
+    const image = document.querySelector(`.level-${i + 1}-url`)
+    const text = document.querySelector(`.level-${i + 1}-description`)
+    const minValue = document.querySelector(`.level-${i + 1}-minimum-hit`)
+
+    let level = {
+      title: title.value,
+      image: image.value,
+      text: text.value,
+      minValue: Number(minValue.value)
+    }
+    allLevels.push(level)
+  }
+  quizz.levels = allLevels
+  console.log(quizz)
+}
+
+function quizzDone(){
+  const screen = document.querySelector(".screen3_3")
+  screen.classList.add("hidden")
+
+  const newScreen = document.querySelector(".screen3_4")
+  newScreen.classList.remove("hidden")
+
+  image = document.getElementById("quizzDoneImage")
+  image.src = quizz.image
+
+  text = document.getElementById("quizzDoneTitle")
+  text.textContent = quizz.title
+}
+
+function postQuizz() {
+  const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizz)
+  post.then(quizzDone)
+  post.catch(() => alert("Algo deu errado"))
 }
 function registerLevelValues() {
   preQuizz.levels = [];
@@ -271,6 +325,8 @@ function registerLevelValues() {
     preQuizz.levels.push(level);
   }
 }
+
+
 function validateLevelValues() {
   registerLevelValues();
   let levelZero = false;
