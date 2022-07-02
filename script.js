@@ -40,8 +40,9 @@ function displayQuizz(selectedQuizz) {
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
             <div class="question ord${i + 1}">
-                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color
-      }">
+                <div class="question-title" style="background-color:${
+                  selectedQuizz.data.questions[i].color
+                }">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
                 </div>
                 <div class="answer-options">
@@ -57,7 +58,7 @@ function displayQuizz(selectedQuizz) {
 }
 function displayAlternatives(alternatives, order) {
   alternatives.sort(scrambleAlternatives);
-  for (let j = 0; j < alternatives.length; j++) {
+  for (let j = 0; j < 4; j++) {
     let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
     document.querySelector(
       `.question.ord${order} .answer-options`
@@ -137,12 +138,9 @@ function screen2ToScreen1() {
 //Js Perguntas
 let preQuizz;
 let obj;
-let quizz = {
-  title: "",
-  image: "",
-  questions: "",
-  levels: "",
-}
+let quizz = [];
+let questionsTitleAndColor = [];
+let questionAnswer = [];
 
 function createQuizz() {
   const screen = document.querySelector(".screen1");
@@ -169,6 +167,9 @@ function questionMaker() {
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
 
+  quizz.push(preQuizz.title);
+  quizz.push(preQuizz.image);
+
   const screen = document.querySelector(".screen3");
   screen.classList.add("hidden");
 
@@ -181,53 +182,59 @@ function questionMaker() {
     questionList.innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${
+                          i + 1
+                        }" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${
+                          i + 1
+                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
             `;
   }
 }
 
-function grabTitleAndImage(){
-  const title = document.querySelector(".preQuizz.title")
-  const image = document.querySelector(".preQuizz.url")
-
-  quizz.title = title.value
-  quizz.image = image.value
-
-}
-
 function grabAnswers() {
-  let allAnswers = []
-
+  let allAnswers = [];
   for (let i = 0; i < obj.numberOfQuestions; i++) {
     let answers = [];
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
-
-    const title = document.querySelector(`.question${i + 1}`);
-    const color = document.querySelector(`.questionColor${i + 1}`);
-
 
     for (let i = 0; i < texts.length; i++) {
       let answer = {
@@ -235,82 +242,38 @@ function grabAnswers() {
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
+      //REVER ISSO
+      //if (i === 0) {
+      //  answer.isCorrectAnswer = true;
+      // }
       answers.push(answer);
     }
-    let question = {
-      title: title.value,
-      color: color.value,
-      answers: answers,
-    }
-    allAnswers.push(question)
+    allAnswers.push(answers);
   }
-  quizz.questions = allAnswers
 }
-
 
 function levelMaker() {
   levels = obj.numberOfLevels;
-  
+
   const screen = document.querySelector(".screen3_2");
   screen.classList.add("hidden");
-  
+
   const newScreen = document.querySelector(".screen3_3");
   newScreen.classList.remove("hidden");
-  
+
   const levelList = document.querySelector(".thirdUl");
-  
+  //REVER ISSO TBM!!
   for (let i = 0; i < levels; i++) {
     levelList.innerHTML += `
-    <ul>
+        <ul>
             <li><h1>Nível ${i + 1}</h1></li>
-            <li><input class="level-${i + 1}-title" type="text" placeholder="Título do nível" required></li>
-            <li><input class="level-${i + 1}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
-            <li><input class="level-${i + 1}-url" type="text" placeholder="URL da imagem do nível" required></li>
-            <li><input class="level-${i + 1}-description" type="text" placeholder="Descrição do nível" required></li>
-            </ul>
-            `;
+            <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
+            <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
+            <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
+            <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
+        </ul>
+        `;
   }
-}
-
-function grabLevels() {
-  let allLevels = []
-  
-  for(let i = 0; i < obj.numberOfLevels; i++){
-    const title = document.querySelector(`.level-${i + 1}-title`)
-    const image = document.querySelector(`.level-${i + 1}-url`)
-    const text = document.querySelector(`.level-${i + 1}-description`)
-    const minValue = document.querySelector(`.level-${i + 1}-minimum-hit`)
-
-    let level = {
-      title: title.value,
-      image: image.value,
-      text: text.value,
-      minValue: Number(minValue.value)
-    }
-    allLevels.push(level)
-  }
-  quizz.levels = allLevels
-  console.log(quizz)
-}
-
-function quizzDone(){
-  const screen = document.querySelector(".screen3_3")
-  screen.classList.add("hidden")
-
-  const newScreen = document.querySelector(".screen3_4")
-  newScreen.classList.remove("hidden")
-
-  image = document.getElementById("quizzDoneImage")
-  image.src = quizz.image
-
-  text = document.getElementById("quizzDoneTitle")
-  text.textContent = quizz.title
-}
-
-function postQuizz() {
-  const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizz)
-  post.then(quizzDone)
-  post.catch(() => alert("Algo deu errado"))
 }
 function registerLevelValues() {
   preQuizz.levels = [];
@@ -325,8 +288,6 @@ function registerLevelValues() {
     preQuizz.levels.push(level);
   }
 }
-
-
 function validateLevelValues() {
   registerLevelValues();
   let levelZero = false;
@@ -350,6 +311,7 @@ function validateLevelValues() {
   }
   return levelZero;
 }
+//Verificar!
 function validateURL(url) {
   const rule =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
@@ -387,17 +349,11 @@ function validateColor(color) {
   const rule = /^\#([0-9]|[A-F]|[a-f]){6}$/;
   return rule.test(color);
 }
-function registrarDadosNiveis() {
-  preQuizz.levels = [];
+function finalizeQuizz() {
+  const valid = validateLevelValues();
 
-  for (let i = 0; i < quizzCriado.quantidadeNiveis; i++) {
-    const nivel = {
-      title: document.querySelector(`.nivel-${i}-titulo`).value,
-      minValue: parseInt(document.querySelector(`.nivel-${i}-acerto`).value),
-      image: document.querySelector(`.nivel-${i}-url`).value,
-      text: document.querySelector(`.nivel-${i}-descricao`).value,
-    };
-
-    quizzCriado.levels.push(nivel);
+  if (!valid) {
+    alert("Por favor, preencha os dados corretamente!");
+    return;
   }
 }
