@@ -367,3 +367,15 @@ function finalizeQuizz() {
   }
   saveQuizz();
 }
+function saveQuizzLocalStorage(response) {
+  const quizz = response.data;
+
+  const valuesLocalStorage = savedQuizzes();
+
+  valuesLocalStorage.push({
+    id: quizz.id,
+    key: quizz.key,
+  });
+
+  localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
+}
