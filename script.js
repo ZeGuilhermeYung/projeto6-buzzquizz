@@ -370,7 +370,7 @@ function finalizeQuizz() {
 function saveQuizzLocalStorage(response) {
   const quizz = response.data;
 
-  const valuesLocalStorage = savedQuizzes();
+  const valuesLocalStorage = getSavedQuizzes();
 
   valuesLocalStorage.push({
     id: quizz.id,
@@ -379,3 +379,4 @@ function saveQuizzLocalStorage(response) {
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
 }
+
