@@ -28,7 +28,16 @@ function getQuizz(quizz) {
   );
   quizzID.then(displayQuizz);
 }
+function getSavedQuizzes() {
+  let values = localStorage.getItem("quizzes");
 
+  if (values !== null) {
+    const data = JSON.parse(values);
+    return data;
+  } else {
+    return [];
+  }
+}
 function displayQuizz(selectedQuizz) {
   currentQuizz = selectedQuizz;
   document.querySelector(".questions").innerHTML = "";
@@ -356,4 +365,5 @@ function finalizeQuizz() {
     alert("Por favor, preencha os dados corretamente!");
     return;
   }
+  saveQuizz();
 }
