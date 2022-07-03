@@ -58,16 +58,19 @@
         <ul class="firstUl">
           <li>
             <input class="preQuizz title" type="text" placeholder="Título do seu Quizz" required />
+            <h3 class="title-alert hidden">O título do quizz deve ter no mínimo 20 e no máximo 65 caracteres</h3>
           </li>
           <li>
             <input class="preQuizz url" type="text" placeholder="URL da imagem do seu quizz" required />
+            <h3 class="url-alert hidden">O valor informado não é uma URL válida</h3>
           </li>
           <li>
-            <input class="preQuizz number-questions" type="text" placeholder="Quantidade de perguntas do quizz"
-              required />
+            <input class="preQuizz number-questions" type="number" placeholder="Quantidade de perguntas do quizz" required />
+            <h3 class="number-questions-alert hidden">O quizz deve ter no mínimo 3 perguntas</h3>
           </li>
           <li>
-            <input class="preQuizz number-levels" type="text" placeholder="Quantidade de níveis do quizz" required />
+            <input class="preQuizz number-levels" type="number" placeholder="Quantidade de níveis do quizz" required />
+            <h3 class="number-levels-alert hidden">O quizz deve ter no mínimo 2 níveis</h3>
           </li>
         </ul>
       </form>

@@ -118,22 +118,15 @@ function displayFinalScore(score) {
   let scoreAverage = 0;
   let levelIndex = 0;
   for (i = 0; i < currentQuizz.data.levels.length; i++) {
-    if (
-      score >= currentQuizz.data.levels[i].minValue &&
-      currentQuizz.data.levels[i].minValue >= scoreAverage
-    ) {
+    if (score >= currentQuizz.data.levels[i].minValue && currentQuizz.data.levels[i].minValue >= scoreAverage) {
       scoreAverage = currentQuizz.data.levels[i].minValue;
       levelIndex = i;
     }
   }
   document.querySelector(".score-screen.hidden").classList.remove("hidden");
-  document.querySelector(".score-result h2").innerHTML = `${Math.round(
-    score
-  )}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
-  document.querySelector(".image-text img").src =
-    currentQuizz.data.levels[levelIndex].image;
-  document.querySelector(".image-text h3").innerHTML =
-    currentQuizz.data.levels[levelIndex].text;
+  document.querySelector(".score-result h2").innerHTML = `${Math.round(score)}% de acerto: ${currentQuizz.data.levels[levelIndex].title}`;
+  document.querySelector(".image-text img").src = currentQuizz.data.levels[levelIndex].image;
+  document.querySelector(".image-text h3").innerHTML = currentQuizz.data.levels[levelIndex].text;
 }
 function restartQuizz() {
   document.querySelector(".score-screen").classList.add("hidden");
@@ -145,50 +138,70 @@ function screen2ToScreen1() {
   document.querySelector(".screen1.hidden").classList.remove("hidden");
 }
 //Js Perguntas
-let preQuizz;
-let obj;
+let preQuizz = {
+  title: "",
+  image: "",
+  numberOfQuestions: "",
+  numberOfLevels: "",
+  questions: [],
+  levels: [],
+};
 let quizz = [];
 let questionsTitleAndColor = [];
 let questionAnswer = [];
 
 function createQuizz() {
-  const screen = document.querySelector(".screen1");
-  screen.classList.add("hidden");
+  document.querySelector(".screen1").classList.add("hidden");
+  document.querySelector(".screen3").classList.remove("hidden");
+}
 
-  const newScreen = document.querySelector(".screen3");
-  newScreen.classList.remove("hidden");
+document.querySelector(".firstUl").addEventListener("keydown", function(e) {
+  if (e.key === "Enter" || e.key === "Tab") {
+    let conditionValues = [
+      (document.querySelector(".preQuizz.title").value.length >= 20 && document.querySelector(".preQuizz.title").value.length <= 65),
+      validateURL(document.querySelector(".preQuizz.url").value),
+      (Number(document.querySelector(".preQuizz.number-questions").value) >= 3),
+      (Number(document.querySelector(".preQuizz.number-levels").value) >= 2),
+    ];
+    console.log(conditionValues);
+    let conditionValue;
+    for (let i = 0; i < document.querySelectorAll(".preQuizz").length; i++) {
+      if (document.activeElement.classList[1] === document.querySelectorAll(".preQuizz")[i].classList[1]) {
+        conditionValue = conditionValues[i];
+      }
+    } 
+    checkInitialQuizzValues(conditionValue, document.activeElement.classList[1]);
+  }
+  });
+
+function checkInitialQuizzValues(condition, type) {
+  
+  if (condition === false && document.querySelector(`.${type}-alert.hidden`) !== null) {
+    document.querySelector(`.${type}-alert.hidden`).classList.remove("hidden");
+  }
+  if (condition === true && document.querySelector(`.${type}-alert.hidden`) === null){
+    document.querySelector(`.${type}-alert`).classList.add("hidden");
+  }
+}
+function validateInitialQuizzValues() {
+
 }
 
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
-  preQuizz = {
-    title: "",
-    image: "",
-    numberOfQuestions: "",
-    numberOfLevels: "",
-    questions: [],
-    levels: [],
-  };
-  obj = preQuizz;
 
   preQuizz.title = quizzDetails[0].value;
   preQuizz.image = quizzDetails[1].value;
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
 
-  quizz.push(preQuizz.title);
-  quizz.push(preQuizz.image);
+  quizz.push(preQuizz.title, preQuizz.image);
 
-  const screen = document.querySelector(".screen3");
-  screen.classList.add("hidden");
-
-  const newScreen = document.querySelector(".screen3_2");
-  newScreen.classList.remove("hidden");
-
-  const questionList = document.querySelector(".secondUl");
+  document.querySelector(".screen3").classList.add("hidden");
+  document.querySelector(".screen3_2").classList.remove("hidden");
 
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
-    questionList.innerHTML += `
+    document.querySelector(".secondUl").innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
                         <li><input class="question${
@@ -220,7 +233,7 @@ function questionMaker() {
                     <ul>
                         <li><input class="questionAnswer${
                           i + 1
-                        }" type="text" placeholder="Resposta Incorreta 2" required></li>
+                        }" type="text" placeholder="Resposta Incorreta 2"></li>
                         <li><input class="questionURL${
                           i + 1
                         }" type="text" placeholder="URL da Imagem"required></li>
@@ -229,7 +242,7 @@ function questionMaker() {
                     <ul>
                         <li><input class="questionAnswer${
                           i + 1
-                        }" type="text" placeholder="Resposta Incorreta 3" required></li>
+                        }" type="text" placeholder="Resposta Incorreta 3"></li>
                         <li><input class="questionURL${
                           i + 1
                         }" type="text" placeholder="URL da Imagem"required></li>
@@ -240,7 +253,7 @@ function questionMaker() {
 
 function grabAnswers() {
   let allAnswers = [];
-  for (let i = 0; i < obj.numberOfQuestions; i++) {
+  for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     let answers = [];
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
@@ -262,18 +275,14 @@ function grabAnswers() {
 }
 
 function levelMaker() {
-  levels = obj.numberOfLevels;
+  levels = preQuizz.numberOfLevels;
 
-  const screen = document.querySelector(".screen3_2");
-  screen.classList.add("hidden");
+  document.querySelector(".screen3_2").classList.add("hidden");
+  document.querySelector(".screen3_3").classList.remove("hidden");
 
-  const newScreen = document.querySelector(".screen3_3");
-  newScreen.classList.remove("hidden");
-
-  const levelList = document.querySelector(".thirdUl");
   //REVER ISSO TBM!!
   for (let i = 0; i < levels; i++) {
-    levelList.innerHTML += `
+    document.querySelector(".thirdUl").innerHTML += `
         <ul>
             <li><h1>Nível ${i + 1}</h1></li>
             <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
@@ -341,19 +350,7 @@ function registerInitialQuizzValues() {
   preQuizz.numberOfQuestions = parseInt(numberOfQuestions);
   preQuizz.numberOfLevels = parseInt(numberOfLevels);
 }
-function validateInitialQuizzValues() {
-  if (preQuizz.title.length < 20 || preQuizz.title.length > 65) {
-    return false;
-  } else if (!validateURL(preQuizz.image)) {
-    return false;
-  } else if (preQuizz.numberOfQuestions < 3) {
-    return false;
-  } else if (preQuizz.numberOfLevels < 2) {
-    return false;
-  }
 
-  return true;
-}
 function validateColor(color) {
   const rule = /^\#([0-9]|[A-F]|[a-f]){6}$/;
   return rule.test(color);
