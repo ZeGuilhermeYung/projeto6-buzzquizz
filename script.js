@@ -241,37 +241,48 @@ function questionMaker() {
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-    <ul>
-                        <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
-                    </ul>
-                    <ul>
-                        <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h1>Pergunta ${i + 1}<ion-icon class="icon" name="create"></ion-icon></h1>
+                      <ul class="dropdown closed">
+                        <ul>
+                            <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                            <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                         </ul>
-                    <ul>
-                    <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                        <li> <br><br></li>
-                    </ul>
-                    <ul>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                        <li><br><br></li>
-                    </ul>
-                    <ul>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                    </ul>
+                        <ul>
+                            <li><h1>Resposta Correta</h1></li>                    
+                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                            </ul>
+                        <ul>
+                        <li><h1>Respostas Incorretas</h1></li>
+                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                            <li> <br><br></li>
+                        </ul>
+                        <ul>
+                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
+                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                            <li><br><br></li>
+                        </ul>
+                        <ul>
+                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
+                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        </ul>
+                      </ul>
                     `;
                   }
 }
 
+let dropdown = document.querySelector(".dropdown")
+
+dropdown.addEventListener('click', (e) => {
+  if (dropdown.classList.contains('closed')) {
+    dropdown.classList.remove('closed')
+  } else {
+    dropdown.classList.add('closed')    
+  }
+})
+
 function grabAnswers() {
-  let allAnswers = [];
   let questions = []
 
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
@@ -294,7 +305,6 @@ function grabAnswers() {
       // }
       answers.push(answer);
     }
-    allAnswers.push(answers);
     let question = {
       title: title.value,
       color: color.value,
