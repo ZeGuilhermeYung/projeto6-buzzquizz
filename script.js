@@ -1,3 +1,5 @@
+const insertSuccessMessage = document.querySelector(".insert-success-message");
+
 let currentQuizz;
 
 function getAllQuizzOptions() {
