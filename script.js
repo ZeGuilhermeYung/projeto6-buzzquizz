@@ -1,9 +1,9 @@
 const succesfullyCreatedQuizz = document.querySelector(".succesfully-created-quizz");
 let currentQuizz;
 
-function getAllQuizzOptions(id) {
+function getAllQuizzOptions() {
   const allQuizz = axios.get(
-    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
+    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/`
   );
   allQuizz.then(renderQuizzOptions);
   //allQuizz.catch(catchQuizzOptions);
@@ -68,7 +68,7 @@ function displayQuizz(selectedQuizz) {
 }
 function displayAlternatives(alternatives, order) {
   alternatives.sort(scrambleAlternatives);
-  for (let j = 0; j < 4; j++) {
+  for (let j = 0; j < alternatives.length; j++) {
     let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
     document.querySelector(
       `.question.ord${order} .answer-options`
@@ -147,9 +147,19 @@ let preQuizz = {
   questions: [],
   levels: [],
 };
-let quizz = [];
+let quizz = {
+  title: "",
+  image: "",
+  questions:[],
+  levels: [],}
 let questionsTitleAndColor = [];
 let questionAnswer = [];
+let quizzToSend = {
+  title: "",
+  image: "",
+  questions:[],
+  levels: [],
+}
 
 function createQuizz() {
   document.querySelector(".screen1").classList.add("hidden");
@@ -194,6 +204,7 @@ function checkInitialQuizzValues(condition, type) {
     document.querySelector(`.${type}-alert`).classList.add("hidden");
   }
 }
+
 function validateInitialQuizzValues(submit, className) {
   let screenClass = submit.parentNode.classList[0];
   console.log(screenClass);
@@ -215,91 +226,106 @@ function validateInitialQuizzValues(submit, className) {
 
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
-
+  
   preQuizz.title = quizzDetails[0].value;
   preQuizz.image = quizzDetails[1].value;
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
-
-  quizz.push(preQuizz.title, preQuizz.image);
-  console.log(quizz);
-
+  
+  quizzToSend.title = preQuizz.title
+  quizzToSend.image = preQuizz.image
+  
   document.querySelector(".screen3").classList.add("hidden");
   document.querySelector(".screen3_2.hidden").classList.remove("hidden");
-
+  
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-                    <ul>
+    <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${
-                          i + 1
-                        }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${
-                          i + 1
-                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
-                        <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                    <li><h1>Respostas Incorretas</h1></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 2"></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 3"></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
+                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
                     </ul>
-            `;
-  }
+                    `;
+                  }
 }
 
 function grabAnswers() {
   let allAnswers = [];
+  let questions = []
+
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     let answers = [];
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
 
+    const title = document.querySelector(`.question${i + 1}`)
+    const color = document.querySelector(`.questionColor${i + 1}`)
+    
+    
     for (let i = 0; i < texts.length; i++) {
       let answer = {
         text: texts[i].value,
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
-      //REVER ISSO
       //if (i === 0) {
       //  answer.isCorrectAnswer = true;
       // }
       answers.push(answer);
     }
     allAnswers.push(answers);
+    let question = {
+      title: title.value,
+      color: color.value,
+      answers: answers,
+    }
+    questions.push(question)
   }
+  quizzToSend.questions = questions
+  console.log(questions)
+}
+
+function quizzDone(){
+  const screen = document.querySelector(".screen3_3")
+  screen.classList.add("hidden")
+  
+  const newScreen = document.querySelector(".screen3_4")
+  newScreen.classList.remove("hidden")
+  
+  image = document.getElementById("quizzDoneImage")
+  image.src = quizz.image
+  
+  text = document.getElementById("quizzDoneTitle")
+  text.textContent = quizz.title
+}
+  
+function postQuizz() {
+  console.log(quizzToSend)
+
+  const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizzToSend)
+  post.then(quizzDone)
+  post.catch(() => alert("Algo deu errado"))
 }
 
 function levelMaker() {
@@ -322,17 +348,18 @@ function levelMaker() {
   }
 }
 function registerLevelValues() {
-  preQuizz.levels = [];
+  let levels = [];
   for (let i = 0; i < preQuizz.numberOfLevels; i++) {
     const level = {
       title: document.querySelector(`.level-${i}-title`).value,
-      minHit: parseInt(document.querySelector(`.level-${i}-minimum-hit`).value),
+      minValue: parseInt(document.querySelector(`.level-${i}-minimum-hit`).value),
       image: document.querySelector(`.level-${i}-url`).value,
       text: document.querySelector(`.level-${i}-description`).value,
     };
 
-    preQuizz.levels.push(level);
+    levels.push(level);
   }
+  quizzToSend.levels = levels
 }
 function validateLevelValues() {
   registerLevelValues();
@@ -413,5 +440,5 @@ function quizzSuccesfullyCreated(id) {
         <img id="quizzDoneImage" class="image2" src="${preQuizz.image}">
         <p id="quizzDoneTitle">${preQuizz.title}</p>
       </div>
-      <input class='submit' type="submit" value="Acessar Quizz" onclick="getAllQuizzOptions(${id})"`>    
+      <input class='submit' type="submit" value="Acessar Quizz" onclick="getAllQuizzOptions(${id})">`    
 }
