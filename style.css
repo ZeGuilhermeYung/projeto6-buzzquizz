@@ -429,6 +429,18 @@ input{
     font-weight: 700;
     margin-top: 28px; 
 }
+.screen3 h3, .screen3_2 h3, .screen3_3 h3 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #EC362D;
+}
+.title-alert, .url-alert, .number-questions-alert, .number-levels-alert {
+    display: flex;
+}
+.title-alert.hidden, .url-alert.hidden, .number-questions-alert.hidden, .number-levels-alert.hidden {
+    display: none;
+}
 
 ul h1{
     margin-top: 0;
