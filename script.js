@@ -1,8 +1,9 @@
+const succesfullyCreatedQuizz = document.querySelector(".succesfully-created-quizz");
 let currentQuizz;
 
-function getAllQuizzOptions() {
+function getAllQuizzOptions(id) {
   const allQuizz = axios.get(
-    "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes"
+    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
   );
   allQuizz.then(renderQuizzOptions);
   //allQuizz.catch(catchQuizzOptions);
@@ -402,4 +403,16 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
+  quizzSuccesfullyCreated(quizz.id);
+}
+function quizzSuccesfullyCreated(id) {
+  insertSuccessMessage.innerHTML = `
+  
+      <h1>Seu quizz está pronto!</h1>
+      <div class="divImg" onclick="">
+        <img id="quizzDoneImage" class="image2" src="${preQuizz.image}">
+        <p id="quizzDoneTitle">${preQuizz.title}</p>
+      </div>
+
+      <input class='submit' type="submit" value="Acessar Quizz" onclick="getAllQuizzOptions(${id})"`>    
 }
