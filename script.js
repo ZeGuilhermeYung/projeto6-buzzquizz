@@ -155,22 +155,32 @@ function createQuizz() {
   document.querySelector(".screen3").classList.remove("hidden");
 }
 
-document.querySelector(".firstUl").addEventListener("keydown", function(e) {
-  if (e.key === "Enter" || e.key === "Tab") {
-    let conditionValues = [
+let conditionValues = [];
+
+function refreshConditionValues (screen) {
+  if (screen === "firstUl" || screen === "screen3") {
+    conditionValues = [
       (document.querySelector(".preQuizz.title").value.length >= 20 && document.querySelector(".preQuizz.title").value.length <= 65),
       validateURL(document.querySelector(".preQuizz.url").value),
       (Number(document.querySelector(".preQuizz.number-questions").value) >= 3),
       (Number(document.querySelector(".preQuizz.number-levels").value) >= 2),
     ];
-    console.log(conditionValues);
+  } 
+}
+document.querySelector(".creatingQuizzForms").addEventListener("keydown", function(e) {
+  if (e.key === "Tab") {
+    let screenClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[0];
+    refreshConditionValues(screenClass);
     let conditionValue;
-    for (let i = 0; i < document.querySelectorAll(".preQuizz").length; i++) {
-      if (document.activeElement.classList[1] === document.querySelectorAll(".preQuizz")[i].classList[1]) {
+    for (let i = 0; i < conditionValues.length; i++) {
+      if (document.activeElement.classList[1] === document.querySelectorAll(`.${document.activeElement.classList[0]}`)[i].classList[1]) {
         conditionValue = conditionValues[i];
       }
     } 
     checkInitialQuizzValues(conditionValue, document.activeElement.classList[1]);
+  }
+  if (e.key === "Enter") {
+    document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
   }
   });
 
@@ -183,8 +193,23 @@ function checkInitialQuizzValues(condition, type) {
     document.querySelector(`.${type}-alert`).classList.add("hidden");
   }
 }
-function validateInitialQuizzValues() {
-
+function validateInitialQuizzValues(submit, className) {
+  let screenClass = submit.parentNode.classList[0];
+  console.log(screenClass);
+  refreshConditionValues(screenClass);
+  console.log(conditionValues);
+  let validateAll = 0;
+  for (let i = 0; i < conditionValues.length; i++) {
+    if (conditionValues[i] === true) {
+      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`${className}`)[i].classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`${className}`)[i].classList[1]);
+    }
+  }
+  if (validateAll === conditionValues.length) {
+    questionMaker();
+  }
 }
 
 function questionMaker() {
@@ -196,10 +221,12 @@ function questionMaker() {
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
 
   quizz.push(preQuizz.title, preQuizz.image);
+  console.log(quizz);
 
   document.querySelector(".screen3").classList.add("hidden");
-  document.querySelector(".screen3_2").classList.remove("hidden");
+  document.querySelector(".screen3_2.hidden").classList.remove("hidden");
 
+  document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
                     <ul>
@@ -344,7 +371,7 @@ function registerInitialQuizzValues() {
   const numberOfLevels = document.querySelector(
     ".firstUl .number-levels"
   ).value;
-
+  document.querySelector(".firstUl")
   preQuizz.title = title;
   preQuizz.image = image;
   preQuizz.numberOfQuestions = parseInt(numberOfQuestions);

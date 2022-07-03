@@ -52,48 +52,50 @@
             <div class="return-screen1" onclick="screen2ToScreen1 ();"><h5>Voltar pra home</h5></div>
         </div>
       </section>
-    <section class="screen3 hidden">
-      <h1>Comece pelo começo</h1>
-      <form>
-        <ul class="firstUl">
-          <li>
-            <input class="preQuizz title" type="text" placeholder="Título do seu Quizz" required />
-            <h3 class="title-alert hidden">O título do quizz deve ter no mínimo 20 e no máximo 65 caracteres</h3>
-          </li>
-          <li>
-            <input class="preQuizz url" type="text" placeholder="URL da imagem do seu quizz" required />
-            <h3 class="url-alert hidden">O valor informado não é uma URL válida</h3>
-          </li>
-          <li>
-            <input class="preQuizz number-questions" type="number" placeholder="Quantidade de perguntas do quizz" required />
-            <h3 class="number-questions-alert hidden">O quizz deve ter no mínimo 3 perguntas</h3>
-          </li>
-          <li>
-            <input class="preQuizz number-levels" type="number" placeholder="Quantidade de níveis do quizz" required />
-            <h3 class="number-levels-alert hidden">O quizz deve ter no mínimo 2 níveis</h3>
-          </li>
-        </ul>
-      </form>
+    <section class="creatingQuizzForms">
+      <section class="screen3 hidden">
+        <h1>Comece pelo começo</h1>
+        <form>
+          <ul class="firstUl">
+            <li>
+              <input class="preQuizz title" type="text" placeholder="Título do seu Quizz" required />
+              <h3 class="title-alert hidden">O título do quizz deve ter no mínimo 20 e no máximo 65 caracteres</h3>
+            </li>
+            <li>
+              <input class="preQuizz url" type="text" placeholder="URL da imagem do seu quizz" required />
+              <h3 class="url-alert hidden">O valor informado não é uma URL válida</h3>
+            </li>
+            <li>
+              <input class="preQuizz number-questions" type="number" placeholder="Quantidade de perguntas do quizz" required />
+              <h3 class="number-questions-alert hidden">O quizz deve ter no mínimo 3 perguntas</h3>
+            </li>
+            <li>
+              <input class="preQuizz number-levels" type="number" placeholder="Quantidade de níveis do quizz" required />
+              <h3 class="number-levels-alert hidden">O quizz deve ter no mínimo 2 níveis</h3>
+            </li>
+          </ul>
+        </form>
+        <input class="submit" type="submit" value="Prosseguir pra criar perguntas" onclick="validateInitialQuizzValues(this, `.preQuizz`);" />
 
-      <input class="submit" type="submit" value="Prosseguir pra criar perguntas" onclick="questionMaker();grabTitleAndImage()" />
-    </section>
+      </section>
 
-    <section class="screen3_2 hidden">
-      <h1 class>Crie suas perguntas</h1>
-      <form class="questionForm">
-        <ul class="secondUl">
-        </ul>
-      </form>
-      <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="grabAnswers();levelMaker();">
-    </section>
+      <section class="screen3_2 hidden">
+        <h1 class>Crie suas perguntas</h1>
+        <form class="questionForm">
+          <ul class="secondUl">
+          </ul>
+        </form>
+        <input class='submit' type="submit" value="Proseguir para criar níveis" onclick="grabAnswers();levelMaker();">
+      </section>
 
-    <section class="screen3_3 hidden">
-      <h1>Agora, decida os níveis</h1>
-      <form class="questionForm">
-        <ul class="thirdUl">
-        </ul>
-      </form>
-      <input class='submit' type="submit" value="Finalizar Quizz" onclick="grabLevels();postQuizz()">
+      <section class="screen3_3 hidden">
+        <h1>Agora, decida os níveis</h1>
+        <form class="questionForm">
+          <ul class="thirdUl">
+          </ul>
+        </form>
+        <input class='submit' type="submit" value="Finalizar Quizz" onclick="grabLevels();postQuizz()">
+      </section>
     </section>
 
     <section class="screen3_4 hidden">
