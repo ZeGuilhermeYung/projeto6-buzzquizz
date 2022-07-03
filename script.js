@@ -1,9 +1,9 @@
 const succesfullyCreatedQuizz = document.querySelector(".succesfully-created-quizz");
 let currentQuizz;
 
-function getAllQuizzOptions() {
+function getAllQuizzOptions(id) {
   const allQuizz = axios.get(
-    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/`
+    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
   );
   allQuizz.then(renderQuizzOptions);
   //allQuizz.catch(catchQuizzOptions);
@@ -50,8 +50,9 @@ function displayQuizz(selectedQuizz) {
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
             <div class="question ord${i + 1}">
-                <div class="question-title" style="background-color:${selectedQuizz.data.questions[i].color
-      }">
+                <div class="question-title" style="background-color:${
+                  selectedQuizz.data.questions[i].color
+                }">
                     <h2>${selectedQuizz.data.questions[i].title}</h2>
                 </div>
                 <div class="answer-options">
@@ -67,7 +68,7 @@ function displayQuizz(selectedQuizz) {
 }
 function displayAlternatives(alternatives, order) {
   alternatives.sort(scrambleAlternatives);
-  for (let j = 0; j < questions.length; j++) {
+  for (let j = 0; j < 4; j++) {
     let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
     document.querySelector(
       `.question.ord${order} .answer-options`
@@ -146,7 +147,7 @@ let preQuizz = {
   questions: [],
   levels: [],
 };
-let quizz;
+let quizz = [];
 let questionsTitleAndColor = [];
 let questionAnswer = [];
 
@@ -157,7 +158,7 @@ function createQuizz() {
 
 let conditionValues = [];
 
-function refreshConditionValues(screen) {
+function refreshConditionValues (screen) {
   if (screen === "firstUl" || screen === "screen3") {
     conditionValues = [
       (document.querySelector(".preQuizz.title").value.length >= 20 && document.querySelector(".preQuizz.title").value.length <= 65),
@@ -165,9 +166,9 @@ function refreshConditionValues(screen) {
       (Number(document.querySelector(".preQuizz.number-questions").value) >= 3),
       (Number(document.querySelector(".preQuizz.number-levels").value) >= 2),
     ];
-  }
+  } 
 }
-document.querySelector(".creatingQuizzForms").addEventListener("keydown", function (e) {
+document.querySelector(".creatingQuizzForms").addEventListener("keydown", function(e) {
   if (e.key === "Tab") {
     let screenClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[0];
     refreshConditionValues(screenClass);
@@ -176,20 +177,20 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
       if (document.activeElement.classList[1] === document.querySelectorAll(`.${document.activeElement.classList[0]}`)[i].classList[1]) {
         conditionValue = conditionValues[i];
       }
-    }
+    } 
     checkInitialQuizzValues(conditionValue, document.activeElement.classList[1]);
   }
   if (e.key === "Enter") {
     document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
   }
-});
+  });
 
 function checkInitialQuizzValues(condition, type) {
-
+  
   if (condition === false && document.querySelector(`.${type}-alert.hidden`) !== null) {
     document.querySelector(`.${type}-alert.hidden`).classList.remove("hidden");
   }
-  if (condition === true && document.querySelector(`.${type}-alert.hidden`) === null) {
+  if (condition === true && document.querySelector(`.${type}-alert.hidden`) === null){
     document.querySelector(`.${type}-alert`).classList.add("hidden");
   }
 }
@@ -231,29 +232,50 @@ function questionMaker() {
     document.querySelector(".secondUl").innerHTML += `
                     <ul>
                         <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                        <li><input class="question${
+                          i + 1
+                        }" type="text" placeholder="Texto da pergunta" required></li>
+                        <li><input class="questionColor${
+                          i + 1
+                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
                     </ul>
                     <ul>
                         <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Correta" required></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                         </ul>
                     <ul>
                         <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                         <li> <br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Incorreta 2"></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
                         <li><br><br></li>
                     </ul>
                     <ul>
-                        <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
-                        <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                    </ul>`;
+                        <li><input class="questionAnswer${
+                          i + 1
+                        }" type="text" placeholder="Resposta Incorreta 3"></li>
+                        <li><input class="questionURL${
+                          i + 1
+                        }" type="text" placeholder="URL da Imagem"required></li>
+                    </ul>
+            `;
   }
 }
 
@@ -299,7 +321,6 @@ function levelMaker() {
         `;
   }
 }
-
 function registerLevelValues() {
   preQuizz.levels = [];
   for (let i = 0; i < preQuizz.numberOfLevels; i++) {
@@ -313,7 +334,6 @@ function registerLevelValues() {
     preQuizz.levels.push(level);
   }
 }
-
 function validateLevelValues() {
   registerLevelValues();
   let levelZero = false;
@@ -337,27 +357,6 @@ function validateLevelValues() {
   }
   return levelZero;
 }
-
-function quizzDone() {
-  const screen = document.querySelector(".screen3_3")
-  screen.classList.add("hidden")
-
-  const newScreen = document.querySelector(".screen3_4")
-  newScreen.classList.remove("hidden")
-
-  image = document.getElementById("quizzDoneImage")
-  image.src = quizz.image
-
-  text = document.getElementById("quizzDoneTitle")
-  text.textContent = quizz.title
-}
-
-function postQuizz() {
-  const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizz)
-  post.then(quizzDone)
-  post.catch(() => alert("Algo deu errado"))
-}
-
 //Verificar!
 function validateURL(url) {
   const rule =
@@ -414,6 +413,5 @@ function quizzSuccesfullyCreated(id) {
         <img id="quizzDoneImage" class="image2" src="${preQuizz.image}">
         <p id="quizzDoneTitle">${preQuizz.title}</p>
       </div>
-
-      <input class='submit' type="submit" value="Acessar Quizz" onclick="getAllQuizzOptions(${id})>"`
+      <input class='submit' type="submit" value="Acessar Quizz" onclick="getAllQuizzOptions(${id})"`>    
 }
