@@ -379,4 +379,3 @@ function saveQuizzLocalStorage(response) {
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
 }
-
