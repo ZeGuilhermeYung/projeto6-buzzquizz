@@ -433,6 +433,9 @@ input{
 .validation-alert.hidden {
     display: none;
 }
+.validationAll-alert.hidden {
+    display: none;
+}
 
 ul h1{
     margin-top: 0;

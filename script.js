@@ -138,6 +138,10 @@ function screen2ToScreen1() {
   document.querySelector(".screen2").classList.add("hidden");
   document.querySelector(".screen1.hidden").classList.remove("hidden");
 }
+function screen3_2ToScreen3_3() {
+  document.querySelector(".screen3_2").classList.add("hidden");
+  document.querySelector(".screen3_3.hidden").classList.remove("hidden");
+}
 function screen3_4ToScreen1() {
   document.querySelector(".screen3_4").classList.add("hidden");
   document.querySelector(".screen1.hidden").classList.remove("hidden");
@@ -205,20 +209,27 @@ function refreshConditionValues (screen, elementClass) {
 document.querySelector(".creatingQuizzForms").addEventListener("keydown", function(e) {
   if (e.key === "Tab") {
     let screenClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[0];
+    let ordUlClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[1];
     console.log(screenClass, document.activeElement.classList[1]);
     refreshConditionValues(screenClass, document.activeElement.classList[1]);
     let conditionValue;
     for (let i = 0; i < conditionValues.length; i++) {
-      if (document.activeElement.classList[1] === document.querySelectorAll(`.${screenClass} .${document.activeElement.classList[0]}`)[i].classList[1]) {
+      if (document.activeElement.classList[1] === document.querySelectorAll(`.${ordUlClass} .${document.activeElement.classList[0]}`)[i].classList[1]) {
         conditionValue = conditionValues[i];
       }
     }
     console.log(conditionValues.length); 
-    checkInitialQuizzValues(conditionValue, document.activeElement.classList[1], screenClass);
+    checkInitialQuizzValues(conditionValue, document.activeElement.classList[1], ordUlClass);
     console.log(conditionValue, document.activeElement.classList[1], screenClass);
   }
   if (e.key === "Enter") {
-    document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
+    if (document.querySelector(".screen3.hidden") === null) {
+      document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
+    }
+    if (document.querySelector(".screen3_2.hidden") === null) {
+      document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
+    }
+
   }
   });
 
@@ -251,8 +262,63 @@ function validateInitialQuizzValues(submit, className) {
   if (validateAll === conditionValues.length && className === "preQuizz") {
     questionMaker();
   }
-  if (className === "quesAnsw") {
-    validateQuestionsAnswers();  
+}
+
+function validateQuestionsAnswers() {
+  let allQuestions = document.querySelectorAll(".quesAnsw.question");
+  let allQuestionsColor = document.querySelectorAll(".quesAnsw.questionColor");
+  let allRightAnswers = document.querySelectorAll(".quesAnsw.rightAnswer");
+  let allRightAnswersURL = document.querySelectorAll(".quesAnsw.rightAnswerURL");
+  let allWrongAnswers1 = document.querySelectorAll(".quesAnsw.wrongAnswer1");
+  let allWrongAnswers2 = document.querySelectorAll(".quesAnsw.wrongAnswer2");
+  let allWrongAnswers3 = document.querySelectorAll(".quesAnsw.wrongAnswer3");
+  let allWrongAnswersURL1 = document.querySelectorAll(".quesAnsw.wrongAnswerURL1");
+  let allWrongAnswersURL2 = document.querySelectorAll(".quesAnsw.wrongAnswerURL2");
+  let allWrongAnswersURL3 = document.querySelectorAll(".quesAnsw.wrongAnswerURL3");
+  let validateAll = 0;
+  
+  for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
+    if (allQuestions[i].value.length >= 20) {
+      checkInitialQuizzValues(true, allQuestions[i].classList[1], allQuestions[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allQuestions[i].classList[1], allQuestions[i].parentNode.parentNode.classList[1]);
+    }
+    if (validateColor(allQuestionsColor[i].value) === true) {
+      checkInitialQuizzValues(true, allQuestionsColor[i].classList[1], allQuestionsColor[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allQuestionsColor[i].classList[1], allQuestionsColor[i].parentNode.parentNode.classList[1]);
+    }
+    if (allRightAnswers[i].value.length !== 0) {
+      checkInitialQuizzValues(true, allRightAnswers[i].classList[1], allRightAnswers[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allRightAnswers[i].classList[1], allRightAnswers[i].parentNode.parentNode.classList[1]);
+    }
+    if (validateURL(allRightAnswersURL[i].value) === true) {
+      checkInitialQuizzValues(true, allRightAnswersURL[i].classList[1], allRightAnswersURL[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allRightAnswersURL[i].classList[1], allRightAnswersURL[i].parentNode.parentNode.classList[1]);
+    }
+    if ((allWrongAnswers1[i].value.length !== 0 && validateURL(allWrongAnswersURL1[i].value) === true) || (allWrongAnswers2[i].value.lenght !== 0 && validateURL(allWrongAnswersURL2[i].value) === true) || (allWrongAnswers3[i].value.lenght !== 0 && validateURL(allWrongAnswersURL3[i].value) === true)) { 
+      validateAll++;
+      if (document.querySelector(`.validationAll-alert.wrongAnswer1${i + 1}-alert.hidden`) === null) {
+        document.querySelector(`.validationAll-alert.wrongAnswer1${i + 1}-alert`).classList.add("hidden"); 
+      }
+    } else {
+      if (document.querySelector(`.validationAll-alert.wrongAnswer1${i + 1}-alert.hidden`) !== null) {
+        document.querySelector(`.validationAll-alert.wrongAnswer1${i + 1}-alert.hidden`).classList.remove("hidden");
+        setTimeout(() => {
+          document.querySelector(`.validationAll-alert.wrongAnswer1${i + 1}-alert`).scrollIntoView();
+        }, 500);
+      }  
+    }   
+  }
+  if (validateAll === Number(preQuizz.numberOfQuestions) * 5) {
+    grabAnswers();
+    levelMaker();
   }
 }
 
@@ -277,48 +343,45 @@ function questionMaker() {
     document.querySelector(".secondUl").innerHTML += `
                   <h1>Pergunta ${i + 1}<ion-icon class="icon${i + 1}" name="create"></ion-icon></h1>      
                   <div class="dropdown closed">
-                    <ul class="quesUl">
+                    <ul class="quesUl quesUl${i + 1}">
                       <li><input class="quesAnsw question${i + 1} question" type="text" placeholder="Texto da pergunta" required></li>
                       <h3 class="validation-alert question${i + 1}-alert hidden">O título da pergunta deve ter no mínimo 20 caracteres</h3>
                       <li><input class="quesAnsw questionColor${i + 1} questionColor" type="text" placeholder="Cor de fundo da pergunta" required></li>
                       <h3 class="validation-alert questionColor${i + 1}-alert hidden">A cor deverá estar no formato hexadecimal, seguido de "#"</h3>
                     </ul>
-                    <ul class="rightAnswUl">
+                    <ul class="rightAnswUl rightAnswUl${i + 1}">
                       <h1>Resposta Correta</h1>                    
-                      <li><input class="quesAnsw rightAnswer${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta correta" required></li>
+                      <li><input class="quesAnsw rightAnswer${i + 1} questionAnswer questionAnswer${i + 1} rightAnswer" type="text" placeholder="Resposta correta" required></li>
                       <h3 class="validation-alert rightAnswer${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw rightAnswerURL${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <li><input class="quesAnsw rightAnswerURL${i + 1} questionURL questionURL${i + 1} rightAnswerURL" type="text" placeholder="URL da Imagem"required></li>
                       <h3 class="validation-alert rightAnswerURL${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                     </ul>
-                    <ul class="wrongAnswUl1">
+                    <ul class="wrongAnswUl1 wrongAnswUl1${i + 1}">
                       <h1>Respostas Incorretas</h1>  
-                      <li><input class="quesAnsw wrongAnswer1${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta incorreta 1" required></li>
+                      <li><input class="quesAnsw wrongAnswer1${i + 1} questionAnswer questionAnswer${i + 1} wrongAnswer1 type="text" placeholder="Resposta incorreta 1" required></li>
                       <h3 class="validation-alert wrongAnswer1${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw wrongAnswerURL1${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da imagem 1" required></li>
+                      <h3 class="validationAll-alert wrongAnswer1${i + 1}-alert hidden">A pergunta ${i + 1} precisa de, pelo menos, uma resposta incorreta!</h3>
+                      <li><input class="quesAnsw wrongAnswerURL1${i + 1} questionURL questionURL${i + 1} wrongAnswerURL1" type="text" placeholder="URL da imagem 1" required></li>
                       <h3 class="validation-alert wrongAnswerURL1${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                       <li> <br><br></li>
                     </ul>
-                    <ul class="wrongAnswUl2">
-                      <li><input class="quesAnsw wrongAnswer2${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta incorreta 2" required></li>
+                    <ul class="wrongAnswUl2 wrongAnswUl2${i + 1}">
+                      <li><input class="quesAnsw wrongAnswer2${i + 1} questionAnswer questionAnswer${i + 1} wrongAnswer2" type="text" placeholder="Resposta incorreta 2" required></li>
                       <h3 class="validation-alert wrongAnswer2${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw wrongAnswerURL2${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem 2" required></li>
+                      <li><input class="quesAnsw wrongAnswerURL2${i + 1} questionURL questionURL${i + 1} wrongAnswerURL2" type="text" placeholder="URL da Imagem 2" required></li>
                       <h3 class="validation-alert wrongAnswerURL2${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                       <li><br><br></li>
                     </ul>
-                      <ul class="wrongAnswUl3">
-                      <li><input class="quesAnsw wrongAnswer3${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta incorreta 3" required></li>
+                      <ul class="wrongAnswUl3 wrongAnswUl3${i + 1}">
+                      <li><input class="quesAnsw wrongAnswer3${i + 1} questionAnswer questionAnswer${i + 1} wrongAnswer3" type="text" placeholder="Resposta incorreta 3" required></li>
                       <h3 class="validation-alert wrongAnswer3${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw wrongAnswerURL3${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem 3" required></li>
+                      <li><input class="quesAnsw wrongAnswerURL3${i + 1} questionURL questionURL${i + 1} wrongAnswerURL3" type="text" placeholder="URL da Imagem 3" required></li>
                       <h3 class="validation-alert wrongAnswerURL3${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                     </ul>
                   </div>
             `;
   }
   dropdownQuestions();
-}
-
-function validateQuestionsAnswers() {
-  
 }
 
 function dropdownQuestions(){
