@@ -207,9 +207,7 @@ function checkInitialQuizzValues(condition, type) {
 
 function validateInitialQuizzValues(submit, className) {
   let screenClass = submit.parentNode.classList[0];
-  console.log(screenClass);
   refreshConditionValues(screenClass);
-  console.log(conditionValues);
   let validateAll = 0;
   for (let i = 0; i < conditionValues.length; i++) {
     if (conditionValues[i] === true) {
@@ -241,46 +239,59 @@ function questionMaker() {
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-                      <h1>Pergunta ${i + 1}<ion-icon class="icon" name="create"></ion-icon></h1>
-                      <ul class="dropdown closed">
-                        <ul>
-                            <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
-                            <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
-                        </ul>
-                        <ul>
-                            <li><h1>Resposta Correta</h1></li>                    
-                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
-                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h1>Pergunta ${i + 1}<ion-icon class="icon${i}" name="create"></ion-icon></h1>      
+                      <div class="dropdown closed" onclick="dropdown(this)">
+                        <ul class="menu">
+                          <li>
+                            <ul>
+                              <li><input class="question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                              <li><input class="questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
                             </ul>
-                        <ul>
-                        <li><h1>Respostas Incorretas</h1></li>
-                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
-                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                            <li> <br><br></li>
+                          </li>
+                          <li>
+                            <ul>
+                              <li><h1>Resposta Correta</h1></li>                    
+                              <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                              <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <ul>
+                            <li><h1>Respostas Incorretas</h1></li>
+                                <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                                <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                                <li> <br><br></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <ul>
+                              <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
+                              <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                              <li><br><br></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <ul>
+                                <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
+                                <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                            </ul>
+                          </li>
                         </ul>
-                        <ul>
-                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
-                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                            <li><br><br></li>
-                        </ul>
-                        <ul>
-                            <li><input class="questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
-                            <li><input class="questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                        </ul>
-                      </ul>
+                      </div>
                     `;
                   }
+  dropdown()
 }
 
-let dropdown = document.querySelector(".dropdown")
-
-dropdown.addEventListener('click', (e) => {
-  if (dropdown.classList.contains('closed')) {
-    dropdown.classList.remove('closed')
-  } else {
-    dropdown.classList.add('closed')    
+function dropdown(){
+  const dropdown = document.querySelectorAll(".dropdown")
+  for(let i = 0; i < dropdown.length; i++){
+    const icon = document.querySelector(`.icon${i}`)
+    icon.addEventListener("click",() => {
+      dropdown[i].classList.toggle("closed")
+    })
+    }
   }
-})
 
 function grabAnswers() {
   let questions = []
@@ -300,9 +311,7 @@ function grabAnswers() {
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
-      //if (i === 0) {
-      //  answer.isCorrectAnswer = true;
-      // }
+      
       answers.push(answer);
     }
     let question = {
@@ -313,7 +322,6 @@ function grabAnswers() {
     questions.push(question)
   }
   quizzToSend.questions = questions
-  console.log(questions)
 }
 
 function quizzDone(){
@@ -331,8 +339,6 @@ function quizzDone(){
 }
   
 function postQuizz() {
-  console.log(quizzToSend)
-
   const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizzToSend)
   post.then(quizzDone)
   post.catch(() => alert("Algo deu errado"))

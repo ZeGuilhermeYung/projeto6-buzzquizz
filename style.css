@@ -492,3 +492,6 @@ ul h1{
     margin-bottom: 46px;
 }
 
+.closed {
+    display: none;
+}
