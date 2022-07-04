@@ -191,12 +191,12 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
     refreshConditionValues(screenClass);
     let conditionValue;
     for (let i = 0; i < conditionValues.length; i++) {
-      if (document.activeElement.classList[1] === document.querySelectorAll(`.${document.activeElement.classList[0]}`)[i].classList[1]) {
+      if (document.activeElement.classList[1] === document.querySelectorAll(`.${screenClass} .${document.activeElement.classList[0]}`)[i].classList[1]) {
         conditionValue = conditionValues[i];
       }
     } 
     checkInitialQuizzValues(conditionValue, document.activeElement.classList[1], screenClass);
-    console.log(conditionValue, document.activeElement.classList[1], screenClass);
+    console.log(conditionValue, document.activeElement.classList[1], screenClass, document.activeElement.classList[0]);
   }
   if (e.key === "Enter") {
     document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
@@ -218,13 +218,14 @@ function validateInitialQuizzValues(submit, className) {
   refreshConditionValues(screenClass);
   console.log(screenClass);
   let validateAll = 0;
+  let ulClass = document.querySelector(`.${className}`).parentNode.parentNode.classList[0];
   for (let i = 0; i < conditionValues.length; i++) {
     if (conditionValues[i] === true) {
-      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1], document.querySelector(`.${className}`).parentNode.parentNode.classList[0]);
-      console.log((conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1]), document.querySelector(`.${className}`).parentNode.parentNode.classList[0]);
+      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1], ulClass);
+      console.log((conditionValues[i], document.querySelectorAll(`.${ulClass} .${className}`)[i].classList[1]), ulClass);
       validateAll++;
     } else {
-      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1], document.querySelector(`.${className}`).parentNode.parentNode.classList[0]);
+      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${ulClass} .${className}`)[i].classList[1], ulClass);
     }
   }
   if (validateAll === conditionValues.length && className === "preQuizz") {
@@ -244,7 +245,6 @@ function questionMaker() {
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
 
   quizz.push(preQuizz.title, preQuizz.image);
-  console.log(quizz);
 
   document.querySelector(".screen3").classList.add("hidden");
   document.querySelector(".screen3_2.hidden").classList.remove("hidden");
@@ -252,7 +252,7 @@ function questionMaker() {
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-                  <div class="dropdown-menu closed" onclick="dropdown(this);"
+                  <div class="dropdown-menu closed">
                     <h1>Pergunta ${i + 1}</h1>
                     <ul class="quesUl">
                       <li><input class="quesAnsw question question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
@@ -295,9 +295,6 @@ function questionMaker() {
 
 function validateQuestionsAnswers() {
   
-}
-function dropdown (box) {
-  box.classList.toggle("closed");
 }
 
 function grabAnswers() {
