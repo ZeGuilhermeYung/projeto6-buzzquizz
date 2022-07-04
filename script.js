@@ -233,13 +233,15 @@ function questionMaker() {
   quizzToSend.title = preQuizz.title
   quizzToSend.image = preQuizz.image
   
+  console.log(preQuizz.title)
+
   document.querySelector(".screen3").classList.add("hidden");
   document.querySelector(".screen3_2.hidden").classList.remove("hidden");
   
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-                      <h1>Pergunta ${i + 1}<ion-icon class="icon${i}" name="create"></ion-icon></h1>      
+                      <h1>Pergunta ${i + 1}<ion-icon class="icon${i + 1}" name="create"></ion-icon></h1>      
                       <div class="dropdown closed" onclick="dropdown(this)">
                         <ul class="menu">
                           <li>
@@ -286,7 +288,7 @@ function questionMaker() {
 function dropdown(){
   const dropdown = document.querySelectorAll(".dropdown")
   for(let i = 0; i < dropdown.length; i++){
-    const icon = document.querySelector(`.icon${i}`)
+    const icon = document.querySelector(`.icon${i + 1}`)
     icon.addEventListener("click",() => {
       dropdown[i].classList.toggle("closed")
     })
@@ -306,20 +308,23 @@ function grabAnswers() {
     
     
     for (let i = 0; i < texts.length; i++) {
+      
       let answer = {
         text: texts[i].value,
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
-      
-      answers.push(answer);
+
+      if(!(answer.text === "")){
+        answers.push(answer);        
+      }
+
     }
     let question = {
       title: title.value,
       color: color.value,
       answers: answers,
     }
-    questions.push(question)
   }
   quizzToSend.questions = questions
 }
