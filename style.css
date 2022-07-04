@@ -539,6 +539,17 @@ ul h1{
         width: 100%;
         padding: 0 20px;
     }
+    .createQuizzEmpty{
+        margin-top: 77px;
+        width: 340px;
+        height: 181px;
+        border: 1px dashed #D4D4D4;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
     .rowMyQuizz {
         height: 400px;
         display: flex;
@@ -585,5 +596,22 @@ ul h1{
         height: 181px;
         margin-left: 0px;
     }
+    .questions {
+        margin: 24px 0;
+    }
+    .question-display {
+        width: 410px;
+        height: 436px;
+    }
+    .question-title {
+        width: 340px;
+        height: 89px;
+    }
+    .answer-options {
+    width: 163px;
+    height: 140px;
+    margin-top: 13px;
+    justify-content: space-between;
+}
     
 }
