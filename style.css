@@ -91,7 +91,8 @@ input{
 }
 
 .createQuizz ion-icon{
-    width: 30px;
+    width: 31px;
+    height: 31px;
     color:red;
     margin-left: 20px;
 }
@@ -102,8 +103,17 @@ input{
 }
 
 .rowMyQuizz{
+    height: 210px;
     display: flex;
+    margin-top: 12px;
     overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.rowMyQuizz .divImg {
+    width: 340px;
+    height: 181px;
+    margin-left: 15px;
 }
 
 .allQuizz {
@@ -132,8 +142,9 @@ input{
     width: 340px;
     height: 181px;
     border-radius: 5px;
+    margin-bottom: 12px;
     cursor: pointer;
-    margin-top: 12px;
+    
     background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
     position: relative;
 }
@@ -169,6 +180,7 @@ input{
 }
 
 .row{
+    margin-top: 12px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -524,5 +536,58 @@ ul h1{
 }
 
 @media (max-width: 1100px) {
-
+    .screen1 {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 20px;
+    }
+    .rowMyQuizz {
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 12px;
+    }
+    .createQuizzTop{
+        width: 340px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto;
+        
+    }
+    .row{
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container{
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    .allQuizz{
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .rowMyQuizz .divImg {
+        width: 340px;
+        height: 181px;
+        margin-left: 0px;
+    }
+    
 }

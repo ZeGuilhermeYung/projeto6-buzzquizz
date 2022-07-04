@@ -173,6 +173,7 @@ function screen3_2ToScreen3_3() {
 function screen3_4ToScreen1() {
   document.querySelector(".screen3_4").classList.add("hidden");
   document.querySelector(".screen1.hidden").classList.remove("hidden");
+  window.location.reload();
 }
 //Js Perguntas
 let preQuizz = {
@@ -271,7 +272,7 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
     if (document.querySelector(".screen3.hidden") === null) {
       document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
     }
-    if (document.querySelector(".screen3_2.hidden") === null) {
+    if (document.querySelector(".screen3_2.hidden") === null || document.querySelector(".screen3_3.hidden") === null) {
       document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
     }
 
