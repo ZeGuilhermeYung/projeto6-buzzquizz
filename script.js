@@ -10,7 +10,6 @@ function getAllQuizzOptions() {
     `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/`
   );
   allQuizz.then(renderQuizzOptions);
-  //allQuizz.catch(catchQuizzOptions);
 }
 
 getAllQuizzOptions();
@@ -30,7 +29,6 @@ function renderQuizzOptions(info) {
 }
 
 function getQuizz(quizz) {
-  console.log(quizz);
   document.querySelector(".loading-screen.hidden").classList.remove("hidden");
   rotateInterval = setInterval(rotateImg, 150);
   const id = quizz.id;
@@ -38,6 +36,9 @@ function getQuizz(quizz) {
     `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
   );
   quizzID.then(displayQuizz);
+  if (document.querySelector(".screen3_4.hidden") === null) {
+    document.querySelector(".screen3_4").classList.add("hidden");
+  }
 }
 function getSavedQuizzes() {
   document.querySelector(".loading-screen.hidden").classList.remove("hidden");
@@ -415,11 +416,9 @@ function validateLevelEntries () {
       }
     } 
   }
-  console.log(validateMinValue);
     if ((validateAll === Number(preQuizz.numberOfLevels) * 4) && validateMinValue === true) {
       registerLevelValues();
       postQuizz();
-      alert("deu certo!");
     }  
 }
 
@@ -679,14 +678,13 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
-  quizzSuccesfullyCreated();
+  quizzSuccesfullyCreated(quizz.id);
 }
 function quizzSuccesfullyCreated(id) {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
   document.querySelector(".acessar-quizz").id = id;
-  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
+  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title;  
 }
-
 function rotateImg () {
   rotateAngle = rotateAngle + 45;
   if (rotateAngle == 360) {
