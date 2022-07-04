@@ -519,6 +519,10 @@ ul h1{
     color: #EC362D;
 }
 
+.delete{
+    position: absolute;
+}
+
 @media (max-width: 1100px) {
 
 }

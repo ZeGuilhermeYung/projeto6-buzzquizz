@@ -713,7 +713,7 @@ function renderMyQuizzes (){
     quizz.then((info) => {
     myQuizzes.innerHTML += 
     `<div id="${LocalQuizzes[i].id}" class="divImg" onclick="getQuizz(this)">
-      <img class="image2" src="${info.data.image}">
+      <img class="image2" src="${info.data.image}"><ion-icon name="trash-outline" class="delete"></ion-icon>
       <p>${info.data.title}</p>
     </div>`
     })
