@@ -383,8 +383,11 @@ function validateLevelEntries () {
     } else {
       checkInitialQuizzValues(false, allLevelMinHit[i].classList[1], allLevelMinHit[i].parentNode.parentNode.classList[1]);
     }
-    if ((allLevelMinHit[i].value === "0") && (allLevelMinHit[i].value.lenght >= 1)) {
+    if (allLevelMinHit[i].value === "0") {
       validateMinValue = true;
+    }
+    if (allLevelMinHit[i].value === "") {
+      validateMinValue = false;
     }
     if (validateURL(allLevelURLs[i].value) === true) {
       checkInitialQuizzValues(true, allLevelURLs[i].classList[1], allLevelURLs[i].parentNode.parentNode.classList[1]);
@@ -416,9 +419,9 @@ function validateLevelEntries () {
       registerLevelValues();
       postQuizz();
       alert("deu certo!");
-    }
-    
+    }  
 }
+
 
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
@@ -675,9 +678,9 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
-  quizzSuccesfullyCreated(quizz.id);
+  quizzSuccesfullyCreated();
 }
-function quizzSuccesfullyCreated(id) {   
+function quizzSuccesfullyCreated() {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
   document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
 }
