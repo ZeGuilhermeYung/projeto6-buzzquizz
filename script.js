@@ -339,10 +339,10 @@ function quizzDone(response){
   newScreen.classList.remove("hidden")
   
   image = document.getElementById("quizzDoneImage")
-  image.src = quizz.image
+  image.src = quizzToSend.image
   
   text = document.getElementById("quizzDoneTitle")
-  text.textContent = quizz.title
+  text.textContent = quizzToSend.title
 }
   
 function postQuizz() {
