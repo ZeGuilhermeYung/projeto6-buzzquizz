@@ -83,7 +83,6 @@ input{
     margin-top: 70px;
     align-self: flex-start;
     width: 100%;
-    display: none;
 }
 
 .createQuizzTop{
@@ -104,7 +103,7 @@ input{
 
 .rowMyQuizz{
     display: flex;
-    justify-content: space-between;
+    overflow-x: scroll;
 }
 
 .allQuizz {

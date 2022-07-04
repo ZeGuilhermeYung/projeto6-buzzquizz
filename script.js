@@ -692,3 +692,35 @@ function rotateImg () {
   }
   document.querySelector(".loading-screen img").setAttribute("style", `transform: rotate(${rotateAngle}deg)`);
 }
+
+
+function renderMyQuizzes (){
+  screen = document.querySelector(".createQuizzEmpty")
+  screen.classList.add("hidden")
+
+  newScreen = document.querySelector(".createQuizz")
+  newScreen.classList.remove("hidden")
+
+  const GetLocalQuizzes = localStorage.getItem("quizzes")
+  const LocalQuizzes = JSON.parse(GetLocalQuizzes)
+
+  const myQuizzes = document.querySelector(".rowMyQuizz")
+
+  console.log(LocalQuizzes)
+
+  for(let i = 0; i < LocalQuizzes.length; i++){
+    const quizz = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${LocalQuizzes[i].id}`)
+    quizz.then((info) => {
+    myQuizzes.innerHTML += 
+    `<div id="${LocalQuizzes[i].id}" class="divImg" onclick="getQuizz(this)">
+      <img class="image2" src="${info.data.image}">
+      <p>${info.data.title}</p>
+    </div>`
+    })
+
+  }
+}
+
+if (!(localStorage.length === 0)){
+  renderMyQuizzes()
+}
