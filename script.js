@@ -173,6 +173,7 @@ function screen3_2ToScreen3_3() {
 function screen3_4ToScreen1() {
   document.querySelector(".screen3_4").classList.add("hidden");
   document.querySelector(".screen1.hidden").classList.remove("hidden");
+  window.location.reload();
 }
 //Js Perguntas
 let preQuizz = {
