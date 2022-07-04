@@ -282,10 +282,10 @@ function questionMaker() {
                       </div>
                     `;
                   }
-  dropdown()
+  dropdownQuestions()
 }
 
-function dropdown(){
+function dropdownQuestions(){
   const dropdown = document.querySelectorAll(".dropdown")
   for(let i = 0; i < dropdown.length; i++){
     const icon = document.querySelector(`.icon${i + 1}`)
@@ -316,7 +316,7 @@ function grabAnswers() {
       };
 
       if(!(answer.text === "")){
-        answers.push(answer);        
+       answers.push(answer);
       }
 
     }
@@ -325,6 +325,7 @@ function grabAnswers() {
       color: color.value,
       answers: answers,
     }
+      questions.push(question)
   }
   quizzToSend.questions = questions
 }
@@ -359,16 +360,30 @@ function levelMaker() {
   //REVER ISSO TBM!!
   for (let i = 0; i < levels; i++) {
     document.querySelector(".thirdUl").innerHTML += `
-        <ul>
-            <li><h1>Nível ${i + 1}</h1></li>
-            <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
-            <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
-            <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
-            <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
-        </ul>
+        <h1>Nível ${i + 1}<ion-icon class="iconLevel${i + 1}" name="create"></ion-icon></h1>
+        <div class="dropdownLevel closed">
+          <ul>
+              <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
+              <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
+              <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
+              <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
+          </ul> 
+        </div>
         `;
   }
+  dropdownLevels()
 }
+
+function dropdownLevels(){
+  const dropdown = document.querySelectorAll(".dropdownLevel")
+  for(let i = 0; i < dropdown.length; i++){
+    const icon = document.querySelector(`.iconLevel${i + 1}`)
+    icon.addEventListener("click",() => {
+      dropdown[i].classList.toggle("closed")
+    })
+    }
+  }
+
 function registerLevelValues() {
   let levels = [];
   for (let i = 0; i < preQuizz.numberOfLevels; i++) {
