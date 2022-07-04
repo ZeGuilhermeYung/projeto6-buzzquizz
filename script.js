@@ -172,7 +172,7 @@ function createQuizz() {
 
 let conditionValues = [];
 
-function refreshConditionValues (screen) {
+function refreshConditionValues (screen, elementClass) {
   if (screen === "firstUl" || screen === "screen3") {
     conditionValues = [
       (document.querySelector(".preQuizz.title").value.length >= 20 && document.querySelector(".preQuizz.title").value.length <= 65),
@@ -181,32 +181,41 @@ function refreshConditionValues (screen) {
       (Number(document.querySelector(".preQuizz.number-levels").value) >= 2)
     ];
   }
-  if (screen === "quesUl" || screen === "screen3_2") {
+  if ((screen === "quesUl" || screen === "screen3_2") && (document.activeElement.classList[2] === "question")) {
     conditionValues = [
-      (document.querySelector(".quesAnsw.question").value.length >= 20),
-      validateColor(document.querySelector(".quesAnsw.questionColor").value)
+      (document.querySelector(`.${elementClass}.question`).value.length >= 20)
     ];
-  } 
-  if ((screen === "rightAnswUl" || screen === "wrongAnswUl" || screen === "screen3_2")) {
+  }
+  if ((screen === "quesUl" || screen === "screen3_2") && (document.activeElement.classList[2] === "questionColor")) {
+    conditionValues = [0,
+      validateColor(document.querySelector(`.${elementClass}.questionColor`).value)
+    ];
+  }  
+  if ((screen === "rightAnswUl" || screen === "wrongAnswUl1" || screen === "wrongAnswUl2" || screen === "wrongAnswUl3" || screen === "screen3_2") && (document.activeElement.classList[2] === "questionAnswer")) {
     conditionValues = [
-      (document.querySelector(".quesAnsw.questionAnswer").value.length !== ""),
-      validateURL(document.querySelector(".quesAnsw.questionURL").value)
+      (document.querySelector(`.${screen} .${elementClass}.questionAnswer`).value.length !== 0)
+    ];
+  }
+  if ((screen === "rightAnswUl" || screen === "wrongAnswUl1" || screen === "wrongAnswUl2" || screen === "wrongAnswUl3" || screen === "screen3_2") && (document.activeElement.classList[2] === "questionURL")) {
+    conditionValues = [0,
+      validateURL(document.querySelector(`.${screen} .${elementClass}.questionURL`).value)
     ];
   }
 }
 document.querySelector(".creatingQuizzForms").addEventListener("keydown", function(e) {
   if (e.key === "Tab") {
     let screenClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[0];
-    console.log(screenClass);
-    refreshConditionValues(screenClass);
+    console.log(screenClass, document.activeElement.classList[1]);
+    refreshConditionValues(screenClass, document.activeElement.classList[1]);
     let conditionValue;
     for (let i = 0; i < conditionValues.length; i++) {
       if (document.activeElement.classList[1] === document.querySelectorAll(`.${screenClass} .${document.activeElement.classList[0]}`)[i].classList[1]) {
         conditionValue = conditionValues[i];
       }
-    } 
+    }
+    console.log(conditionValues.length); 
     checkInitialQuizzValues(conditionValue, document.activeElement.classList[1], screenClass);
-    console.log(conditionValue, document.activeElement.classList[1], screenClass, document.activeElement.classList[0]);
+    console.log(conditionValue, document.activeElement.classList[1], screenClass);
   }
   if (e.key === "Enter") {
     document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
@@ -214,7 +223,7 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
   });
 
 function checkInitialQuizzValues(condition, type, ulClass) {
-  
+  console.log(condition, type, ulClass);
   if (condition === false && document.querySelector(`.${ulClass} .${type}-alert.hidden`) !== null) {
     document.querySelector(`.${ulClass} .${type}-alert.hidden`).classList.remove("hidden");
   }
@@ -226,7 +235,7 @@ function checkInitialQuizzValues(condition, type, ulClass) {
 function validateInitialQuizzValues(submit, className) {
   let screenClass = submit.parentNode.classList[0];
 
-  refreshConditionValues(screenClass);
+  refreshConditionValues(screenClass, className);
   console.log(screenClass);
   let validateAll = 0;
   let ulClass = document.querySelector(`.${className}`).parentNode.parentNode.classList[0];
@@ -269,38 +278,38 @@ function questionMaker() {
                   <h1>Pergunta ${i + 1}<ion-icon class="icon${i + 1}" name="create"></ion-icon></h1>      
                   <div class="dropdown closed">
                     <ul class="quesUl">
-                      <li><input class="quesAnsw question question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
-                      <h3 class="validation-alert question-alert hidden">O título da pergunta deve ter no mínimo 20 caracteres</h3>
-                      <li><input class="quesAnsw questionColor questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
-                      <h3 class="validation-alert questionColor-alert hidden">A cor deverá estar no formato hexadecimal, seguido de "#"</h3>
+                      <li><input class="quesAnsw question${i + 1} question" type="text" placeholder="Texto da pergunta" required></li>
+                      <h3 class="validation-alert question${i + 1}-alert hidden">O título da pergunta deve ter no mínimo 20 caracteres</h3>
+                      <li><input class="quesAnsw questionColor${i + 1} questionColor" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                      <h3 class="validation-alert questionColor${i + 1}-alert hidden">A cor deverá estar no formato hexadecimal, seguido de "#"</h3>
                     </ul>
                     <ul class="rightAnswUl">
                       <h1>Resposta Correta</h1>                    
-                      <li><input class="quesAnsw questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
-                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                      <li><input class="quesAnsw rightAnswer${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta correta" required></li>
+                      <h3 class="validation-alert rightAnswer${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw rightAnswerURL${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h3 class="validation-alert rightAnswerURL${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                     </ul>
-                    <ul class="wrongAnswUl">
+                    <ul class="wrongAnswUl1">
                       <h1>Respostas Incorretas</h1>  
-                      <li><input class="quesAnsw questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
-                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                      <li><input class="quesAnsw wrongAnswer1${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta incorreta 1" required></li>
+                      <h3 class="validation-alert wrongAnswer1${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw wrongAnswerURL1${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da imagem 1" required></li>
+                      <h3 class="validation-alert wrongAnswerURL1${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                       <li> <br><br></li>
                     </ul>
-                    <ul class="wrongAnswUl">
-                      <li><input class="quesAnsw questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
-                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                    <ul class="wrongAnswUl2">
+                      <li><input class="quesAnsw wrongAnswer2${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta incorreta 2" required></li>
+                      <h3 class="validation-alert wrongAnswer2${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw wrongAnswerURL2${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem 2" required></li>
+                      <h3 class="validation-alert wrongAnswerURL2${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                       <li><br><br></li>
                     </ul>
-                    <ul class="wrongAnswUl">
-                      <li><input class="quesAnsw questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
-                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
-                      <li><input class="quesAnsw questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
-                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                      <ul class="wrongAnswUl3">
+                      <li><input class="quesAnsw wrongAnswer3${i + 1} questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta incorreta 3" required></li>
+                      <h3 class="validation-alert wrongAnswer3${i + 1}-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw wrongAnswerURL3${i + 1} questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem 3" required></li>
+                      <h3 class="validation-alert wrongAnswerURL3${i + 1}-alert hidden">O valor informado não é uma URL válida</h3>
                     </ul>
                   </div>
             `;
