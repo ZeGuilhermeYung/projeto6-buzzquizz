@@ -383,7 +383,7 @@ function validateLevelEntries () {
     } else {
       checkInitialQuizzValues(false, allLevelMinHit[i].classList[1], allLevelMinHit[i].parentNode.parentNode.classList[1]);
     }
-    if ((allLevelMinHit[i].value === "0") && (allLevelMinHit[i].value.lenght >= 1)) {
+    if (allLevelMinHit[i].value === "0") {
       validateMinValue = true;
     }
     if (validateURL(allLevelURLs[i].value) === true) {
