@@ -151,9 +151,19 @@ let preQuizz = {
   questions: [],
   levels: [],
 };
-let quizz = [];
+let quizz = {
+  title: "",
+  image: "",
+  questions:[],
+  levels: [],}
 let questionsTitleAndColor = [];
 let questionAnswer = [];
+let quizzToSend = {
+  title: "",
+  image: "",
+  questions:[],
+  levels: [],
+}
 
 function createQuizz() {
   document.querySelector(".screen1").classList.add("hidden");
@@ -212,6 +222,7 @@ function checkInitialQuizzValues(condition, type, ulClass) {
     document.querySelector(`.${ulClass} .${type}-alert`).classList.add("hidden");
   }
 }
+
 function validateInitialQuizzValues(submit, className) {
   let screenClass = submit.parentNode.classList[0];
 
@@ -238,22 +249,25 @@ function validateInitialQuizzValues(submit, className) {
 
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
-
+  
   preQuizz.title = quizzDetails[0].value;
   preQuizz.image = quizzDetails[1].value;
   preQuizz.numberOfQuestions = Number(quizzDetails[2].value);
   preQuizz.numberOfLevels = Number(quizzDetails[3].value);
-
-  quizz.push(preQuizz.title, preQuizz.image);
+  
+  quizzToSend.title = preQuizz.title
+  quizzToSend.image = preQuizz.image
+  
+  console.log(preQuizz.title)
 
   document.querySelector(".screen3").classList.add("hidden");
   document.querySelector(".screen3_2.hidden").classList.remove("hidden");
-
+  
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-                  <div class="dropdown-menu closed">
-                    <h1>Pergunta ${i + 1}</h1>
+                  <h1>Pergunta ${i + 1}<ion-icon class="icon${i + 1}" name="create"></ion-icon></h1>      
+                  <div class="dropdown closed">
                     <ul class="quesUl">
                       <li><input class="quesAnsw question question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
                       <h3 class="validation-alert question-alert hidden">O título da pergunta deve ter no mínimo 20 caracteres</h3>
@@ -291,29 +305,77 @@ function questionMaker() {
                   </div>
             `;
   }
+  dropdownQuestions();
 }
 
 function validateQuestionsAnswers() {
   
 }
 
+function dropdownQuestions(){
+  const dropdown = document.querySelectorAll(".dropdown")
+  for(let i = 0; i < dropdown.length; i++){
+    const icon = document.querySelector(`.icon${i + 1}`)
+    icon.addEventListener("click",() => {
+      dropdown[i].classList.toggle("closed")
+    })
+    }
+  }
+
 function grabAnswers() {
-  let allAnswers = [];
+  let questions = []
+
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     let answers = [];
     const texts = document.querySelectorAll(`.questionAnswer${i + 1}`);
     const url = document.querySelectorAll(`.questionURL${i + 1}`);
 
+    const title = document.querySelector(`.question${i + 1}`)
+    const color = document.querySelector(`.questionColor${i + 1}`)
+    
+    
     for (let i = 0; i < texts.length; i++) {
+      
       let answer = {
         text: texts[i].value,
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
-      answers.push(answer);
+
+      if(!(answer.text === "")){
+       answers.push(answer);
+      }
+
     }
-    allAnswers.push(answers);
+    let question = {
+      title: title.value,
+      color: color.value,
+      answers: answers,
+    }
+      questions.push(question)
   }
+  quizzToSend.questions = questions
+}
+
+function quizzDone(response){  
+  saveQuizzLocalStorage(response)
+  const screen = document.querySelector(".screen3_3")
+  screen.classList.add("hidden")
+  
+  const newScreen = document.querySelector(".screen3_4")
+  newScreen.classList.remove("hidden")
+  
+  image = document.getElementById("quizzDoneImage")
+  image.src = quizz.image
+  
+  text = document.getElementById("quizzDoneTitle")
+  text.textContent = quizz.title
+}
+  
+function postQuizz() {
+  const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizzToSend)
+  post.then(quizzDone)
+  post.catch(() => alert("Algo deu errado"))
 }
 
 function levelMaker() {
@@ -325,18 +387,32 @@ function levelMaker() {
   //REVER ISSO TBM!!
   for (let i = 0; i < levels; i++) {
     document.querySelector(".thirdUl").innerHTML += `
-        <ul>
-            <li><h1>Nível ${i + 1}</h1></li>
-            <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
-            <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
-            <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
-            <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
-        </ul>
+        <h1>Nível ${i + 1}<ion-icon class="iconLevel${i + 1}" name="create"></ion-icon></h1>
+        <div class="dropdownLevel closed">
+          <ul>
+              <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
+              <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
+              <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
+              <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
+          </ul> 
+        </div>
         `;
   }
+  dropdownLevels()
 }
+
+function dropdownLevels(){
+  const dropdown = document.querySelectorAll(".dropdownLevel")
+  for(let i = 0; i < dropdown.length; i++){
+    const icon = document.querySelector(`.iconLevel${i + 1}`)
+    icon.addEventListener("click",() => {
+      dropdown[i].classList.toggle("closed")
+    })
+    }
+  }
+
 function registerLevelValues() {
-  preQuizz.levels = [];
+  let levels = [];
   for (let i = 0; i < preQuizz.numberOfLevels; i++) {
     const level = {
       title: document.querySelector(`.level-${i}-title`).value,
@@ -345,8 +421,9 @@ function registerLevelValues() {
       text: document.querySelector(`.level-${i}-description`).value,
     };
 
-    preQuizz.levels.push(level);
+    levels.push(level);
   }
+  quizzToSend.levels = levels
 }
 function validateLevelValues() {
   registerLevelValues();
@@ -422,5 +499,5 @@ function saveQuizzLocalStorage(response) {
 }
 function quizzSuccesfullyCreated() {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
-  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title;         
+  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
 }

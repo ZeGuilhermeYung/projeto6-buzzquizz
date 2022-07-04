@@ -469,16 +469,14 @@ ul h1{
     align-items:center;
     justify-content: center;
 }
-/*.dropdown-menu ul{
-    display: flex;
-}
-.dropdown-menu.closed ul{
-    display: none;
-}*/
 
 .screen3_4 h1{
     font-size: 23px;
     font-weight: 700;
     margin-top: 70px;
     margin-bottom: 46px;
+}
+
+.closed {
+    display: none;
 }
