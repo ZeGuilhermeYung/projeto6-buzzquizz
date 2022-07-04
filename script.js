@@ -1,9 +1,9 @@
 const succesfullyCreatedQuizz = document.querySelector(".succesfully-created-quizz");
 let currentQuizz;
 
-function getAllQuizzOptions(id) {
+function getAllQuizzOptions() {
   const allQuizz = axios.get(
-    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
+    `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/`
   );
   allQuizz.then(renderQuizzOptions);
   //allQuizz.catch(catchQuizzOptions);
@@ -49,7 +49,7 @@ function displayQuizz(selectedQuizz) {
   selectedQuizz.data.questions.sort(scrambleAlternatives);
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
-            <div class="question ord${i + 1}">
+            <div class="question-display ord${i + 1}">
                 <div class="question-title" style="background-color:${
                   selectedQuizz.data.questions[i].color
                 }">
@@ -68,10 +68,10 @@ function displayQuizz(selectedQuizz) {
 }
 function displayAlternatives(alternatives, order) {
   alternatives.sort(scrambleAlternatives);
-  for (let j = 0; j < 4; j++) {
+  for (let j = 0; j < alternatives.length; j++) {
     let isRightOrWrong = isCorrect(alternatives[j].isCorrectAnswer);
     document.querySelector(
-      `.question.ord${order} .answer-options`
+      `.question-display.ord${order} .answer-options`
     ).innerHTML += `
             <div class="alternative ${isRightOrWrong}" onclick="answerQuestion(this, ${order}, ${alternatives[j].isCorrectAnswer});">
                 <img src="${alternatives[j].image}" alt="">
@@ -138,6 +138,10 @@ function screen2ToScreen1() {
   document.querySelector(".screen2").classList.add("hidden");
   document.querySelector(".screen1.hidden").classList.remove("hidden");
 }
+function screen3_4ToScreen1() {
+  document.querySelector(".screen3_4").classList.add("hidden");
+  document.querySelector(".screen1.hidden").classList.remove("hidden");
+}
 //Js Perguntas
 let preQuizz = {
   title: "",
@@ -164,13 +168,26 @@ function refreshConditionValues (screen) {
       (document.querySelector(".preQuizz.title").value.length >= 20 && document.querySelector(".preQuizz.title").value.length <= 65),
       validateURL(document.querySelector(".preQuizz.url").value),
       (Number(document.querySelector(".preQuizz.number-questions").value) >= 3),
-      (Number(document.querySelector(".preQuizz.number-levels").value) >= 2),
+      (Number(document.querySelector(".preQuizz.number-levels").value) >= 2)
+    ];
+  }
+  if (screen === "quesUl" || screen === "screen3_2") {
+    conditionValues = [
+      (document.querySelector(".quesAnsw.question").value.length >= 20),
+      validateColor(document.querySelector(".quesAnsw.questionColor").value)
     ];
   } 
+  if ((screen === "rightAnswUl" || screen === "wrongAnswUl" || screen === "screen3_2")) {
+    conditionValues = [
+      (document.querySelector(".quesAnsw.questionAnswer").value.length !== ""),
+      validateURL(document.querySelector(".quesAnsw.questionURL").value)
+    ];
+  }
 }
 document.querySelector(".creatingQuizzForms").addEventListener("keydown", function(e) {
   if (e.key === "Tab") {
     let screenClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[0];
+    console.log(screenClass);
     refreshConditionValues(screenClass);
     let conditionValue;
     for (let i = 0; i < conditionValues.length; i++) {
@@ -178,38 +195,43 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
         conditionValue = conditionValues[i];
       }
     } 
-    checkInitialQuizzValues(conditionValue, document.activeElement.classList[1]);
+    checkInitialQuizzValues(conditionValue, document.activeElement.classList[1], screenClass);
+    console.log(conditionValue, document.activeElement.classList[1], screenClass);
   }
   if (e.key === "Enter") {
     document.querySelector(`.${document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.parentNode.parentNode.classList[0]} .submit`).click();
   }
   });
 
-function checkInitialQuizzValues(condition, type) {
+function checkInitialQuizzValues(condition, type, ulClass) {
   
-  if (condition === false && document.querySelector(`.${type}-alert.hidden`) !== null) {
-    document.querySelector(`.${type}-alert.hidden`).classList.remove("hidden");
+  if (condition === false && document.querySelector(`.${ulClass} .${type}-alert.hidden`) !== null) {
+    document.querySelector(`.${ulClass} .${type}-alert.hidden`).classList.remove("hidden");
   }
-  if (condition === true && document.querySelector(`.${type}-alert.hidden`) === null){
-    document.querySelector(`.${type}-alert`).classList.add("hidden");
+  if (condition === true && document.querySelector(`.${ulClass} .${type}-alert.hidden`) === null) {
+    document.querySelector(`.${ulClass} .${type}-alert`).classList.add("hidden");
   }
 }
 function validateInitialQuizzValues(submit, className) {
   let screenClass = submit.parentNode.classList[0];
-  console.log(screenClass);
+
   refreshConditionValues(screenClass);
-  console.log(conditionValues);
+  console.log(screenClass);
   let validateAll = 0;
   for (let i = 0; i < conditionValues.length; i++) {
     if (conditionValues[i] === true) {
-      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`${className}`)[i].classList[1]);
+      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1], document.querySelector(`.${className}`).parentNode.parentNode.classList[0]);
+      console.log((conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1]), document.querySelector(`.${className}`).parentNode.parentNode.classList[0]);
       validateAll++;
     } else {
-      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`${className}`)[i].classList[1]);
+      checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1], document.querySelector(`.${className}`).parentNode.parentNode.classList[0]);
     }
   }
-  if (validateAll === conditionValues.length) {
+  if (validateAll === conditionValues.length && className === "preQuizz") {
     questionMaker();
+  }
+  if (className === "quesAnsw") {
+    validateQuestionsAnswers();  
   }
 }
 
@@ -230,53 +252,52 @@ function questionMaker() {
   document.querySelector(".secondUl").innerHTML = "";
   for (let i = 0; i < preQuizz.numberOfQuestions; i++) {
     document.querySelector(".secondUl").innerHTML += `
-                    <ul>
-                        <li><h1>Pergunta ${i + 1}</h1></li>
-                        <li><input class="question${
-                          i + 1
-                        }" type="text" placeholder="Texto da pergunta" required></li>
-                        <li><input class="questionColor${
-                          i + 1
-                        }" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                  <div class="dropdown-menu closed" onclick="dropdown(this);"
+                    <h1>Pergunta ${i + 1}</h1>
+                    <ul class="quesUl">
+                      <li><input class="quesAnsw question question${i + 1}" type="text" placeholder="Texto da pergunta" required></li>
+                      <h3 class="validation-alert question-alert hidden">O título da pergunta deve ter no mínimo 20 caracteres</h3>
+                      <li><input class="quesAnsw questionColor questionColor${i + 1}" type="text" placeholder="Cor de fundo da pergunta" required></li>
+                      <h3 class="validation-alert questionColor-alert hidden">A cor deverá estar no formato hexadecimal, seguido de "#"</h3>
                     </ul>
-                    <ul>
-                        <li><h1>Resposta Correta</h1></li>                    
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Correta" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
-                        </ul>
-                    <ul>
-                        <li><h1>Respostas Incorretas</h1></li>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 1" required></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
-                        <li> <br><br></li>
+                    <ul class="rightAnswUl">
+                      <h1>Resposta Correta</h1>                    
+                      <li><input class="quesAnsw questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta Correta" required></li>
+                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
                     </ul>
-                    <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 2"></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
-                        <li><br><br></li>
+                    <ul class="wrongAnswUl">
+                      <h1>Respostas Incorretas</h1>  
+                      <li><input class="quesAnsw questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 1" required></li>
+                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                      <li> <br><br></li>
                     </ul>
-                    <ul>
-                        <li><input class="questionAnswer${
-                          i + 1
-                        }" type="text" placeholder="Resposta Incorreta 3"></li>
-                        <li><input class="questionURL${
-                          i + 1
-                        }" type="text" placeholder="URL da Imagem"required></li>
+                    <ul class="wrongAnswUl">
+                      <li><input class="quesAnsw questionAnswer questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 2"></li>
+                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw questionURL questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                      <li><br><br></li>
                     </ul>
+                    <ul class="wrongAnswUl">
+                      <li><input class="quesAnsw questionAnswer${i + 1}" type="text" placeholder="Resposta Incorreta 3"></li>
+                      <h3 class="validation-alert questionAnswer-alert hidden">O título da resposta não pode estar vazio</h3>
+                      <li><input class="quesAnsw questionURL${i + 1}" type="text" placeholder="URL da Imagem"required></li>
+                      <h3 class="validation-alert questionURL-alert hidden">O valor informado não é uma URL válida</h3>
+                    </ul>
+                  </div>
             `;
   }
+}
+
+function validateQuestionsAnswers() {
+  
+}
+function dropdown (box) {
+  box.classList.toggle("closed");
 }
 
 function grabAnswers() {
@@ -292,10 +313,6 @@ function grabAnswers() {
         image: url[i].value,
         isCorrectAnswer: i === 0 ? true : false,
       };
-      //REVER ISSO
-      //if (i === 0) {
-      //  answer.isCorrectAnswer = true;
-      // }
       answers.push(answer);
     }
     allAnswers.push(answers);
@@ -326,8 +343,8 @@ function registerLevelValues() {
   for (let i = 0; i < preQuizz.numberOfLevels; i++) {
     const level = {
       title: document.querySelector(`.level-${i}-title`).value,
-      minHit: parseInt(document.querySelector(`.level-${i}-minimum-hit`).value),
-      image: document.querySelector(`.level-${i}-url`).value,
+      minValue: parseInt(document.querySelector(`.level-${i}-minimum-hit`).value),
+      image: url(document.querySelector(`.level-${i}-url`).value),
       text: document.querySelector(`.level-${i}-description`).value,
     };
 
@@ -359,8 +376,9 @@ function validateLevelValues() {
 }
 //Verificar!
 function validateURL(url) {
-  const rule =
-    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
+  //const rule =
+  //  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/|/(http[s]*:\/\/)([a-z\-_0-9\/.]+)\.([a-z.]{2,3})\/([a-z0-9\-_\/._~:?#\[\]@!$&'()*+,;=%]*)([a-z0-9]+\.)(jpg|jpeg|png)/i;
+  const rule = /(http[s]*:\/\/)([a-z\-_0-9\/.]+)\.([a-z.]{2,3})\/([a-z0-9\-_\/._~:?#\[\]@!$&'()*+,;=%]*)([a-z0-9]+\.)(jpg|jpeg|png|gif|webp|svg|bmp|psd|tiff|pdf|raw)/i;
   return rule.test(url);
 }
 function registerInitialQuizzValues() {
@@ -403,16 +421,9 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
-  quizzSuccesfullyCreated(quizz.id);
+  quizzSuccesfullyCreated();
 }
-function quizzSuccesfullyCreated(id) {
-  insertSuccessMessage.innerHTML = `
-  
-      <h1>Seu quizz está pronto!</h1>
-      <div class="divImg" onclick="">
-        <img id="quizzDoneImage" class="image2" src="${preQuizz.image}">
-        <p id="quizzDoneTitle">${preQuizz.title}</p>
-      </div>
-
-      <input class='submit' type="submit" value="Acessar Quizz" onclick="getAllQuizzOptions(${id})"`>    
+function quizzSuccesfullyCreated() {   
+  document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
+  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title;         
 }

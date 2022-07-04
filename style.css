@@ -204,7 +204,7 @@ input{
 .questions {
     margin: 42px 0;
 }
-.question {
+.question-display {
     width: 759px;
     height: 676px;
     background-color: #FFFFFF;
@@ -393,14 +393,6 @@ input{
     margin: 0 auto 0 auto;
 }
 
-/*.screen3_2{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 1100px;
-    margin: 0 auto 0 auto;
-}*/
-
 .screen3 form{
     width: 600px;
     margin-top: 71px;
@@ -435,10 +427,10 @@ input{
     line-height: 19px;
     color: #EC362D;
 }
-.title-alert, .url-alert, .number-questions-alert, .number-levels-alert {
+.validation-alert {
     display: flex;
 }
-.title-alert.hidden, .url-alert.hidden, .number-questions-alert.hidden, .number-levels-alert.hidden {
+.validation-alert.hidden {
     display: none;
 }
 
@@ -457,13 +449,6 @@ ul h1{
     margin-top: 9px;
 }
 
-/*.secondUl li input{
-    width: 564px;
-    height: 46px;
-    border: 1px solid #D1D1D1;
-    border-radius: 5px;
-    margin-top: 9px;
-}*/
 
 .submit{
     margin-top: 85px;
@@ -484,6 +469,12 @@ ul h1{
     align-items:center;
     justify-content: center;
 }
+/*.dropdown-menu ul{
+    display: flex;
+}
+.dropdown-menu.closed ul{
+    display: none;
+}*/
 
 .screen3_4 h1{
     font-size: 23px;
