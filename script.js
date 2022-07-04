@@ -36,7 +36,9 @@ function getQuizz(quizz) {
     `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
   );
   quizzID.then(displayQuizz);
-  document.querySelector(".screen3_4").classList.add("hidden"); 
+  if (document.querySelector(".screen3_4.hidden") === null) {
+    document.querySelector(".screen3_4").classList.add("hidden");
+  }
 }
 function getSavedQuizzes() {
   document.querySelector(".loading-screen.hidden").classList.remove("hidden");
