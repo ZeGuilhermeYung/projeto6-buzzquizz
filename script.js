@@ -324,7 +324,8 @@ function grabAnswers() {
   quizzToSend.questions = questions
 }
 
-function quizzDone(){
+function quizzDone(response){  
+  saveQuizzLocalStorage(response)
   const screen = document.querySelector(".screen3_3")
   screen.classList.add("hidden")
   
@@ -448,6 +449,7 @@ function saveQuizzLocalStorage(response) {
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
   quizzSuccesfullyCreated(quizz.id);
 }
+const insertSuccessMessage = document.querySelector('.succesfully-created-quizz');
 function quizzSuccesfullyCreated(id) {
   insertSuccessMessage.innerHTML = `
   
