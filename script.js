@@ -38,6 +38,7 @@ function getQuizz(quizz) {
     `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
   );
   quizzID.then(displayQuizz);
+  document.querySelector(".screen3_4").classList.add("hidden"); 
 }
 function getSavedQuizzes() {
   document.querySelector(".loading-screen.hidden").classList.remove("hidden");
@@ -679,14 +680,13 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
-  quizzSuccesfullyCreated();
+  quizzSuccesfullyCreated(quizz.id);
 }
-function quizzSuccesfullyCreated() {   
+function quizzSuccesfullyCreated(id) {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
   document.querySelector(".acessar-quizz").id = id;
-  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
+  document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title;  
 }
-
 function rotateImg () {
   rotateAngle = rotateAngle + 45;
   if (rotateAngle == 360) {
