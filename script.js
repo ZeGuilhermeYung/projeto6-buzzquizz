@@ -1,7 +1,11 @@
 const succesfullyCreatedQuizz = document.querySelector(".succesfully-created-quizz");
 let currentQuizz;
+let rotateAngle = 0;
+let rotateInterval;
 
 function getAllQuizzOptions() {
+  document.querySelector(".loading-screen.hidden").classList.remove("hidden");
+  rotateInterval = setInterval(rotateImg, 150);
   const allQuizz = axios.get(
     `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/`
   );
@@ -12,6 +16,9 @@ function getAllQuizzOptions() {
 getAllQuizzOptions();
 
 function renderQuizzOptions(info) {
+  document.querySelector(".loading-screen").classList.add("hidden");
+  document.querySelector(".loading-screen img").removeAttribute("style", `transform: rotate(${rotateAngle}deg)`);
+  clearInterval(rotateInterval);
   const quizzSpace = document.querySelector(".row");
   for (let i = 0; i < info.data.length; i++) {
     quizzSpace.innerHTML += `
@@ -23,6 +30,8 @@ function renderQuizzOptions(info) {
 }
 
 function getQuizz(quizz) {
+  document.querySelector(".loading-screen.hidden").classList.remove("hidden");
+  rotateInterval = setInterval(rotateImg, 150);
   const id = quizz.id;
   const quizzID = axios.get(
     `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${id}`
@@ -30,16 +39,26 @@ function getQuizz(quizz) {
   quizzID.then(displayQuizz);
 }
 function getSavedQuizzes() {
+  document.querySelector(".loading-screen.hidden").classList.remove("hidden");
+  rotateInterval = setInterval(rotateImg, 150);
+
   let values = localStorage.getItem("quizzes");
 
+  document.querySelector(".loading-screen").classList.add("hidden");
+  document.querySelector(".loading-screen img").removeAttribute("style", `transform: rotate(${rotateAngle}deg)`);
+  clearInterval(rotateInterval);
   if (values !== null) {
     const data = JSON.parse(values);
     return data;
   } else {
     return [];
   }
+  
 }
 function displayQuizz(selectedQuizz) {
+  document.querySelector(".loading-screen").classList.add("hidden");
+  document.querySelector(".loading-screen img").removeAttribute("style", `transform: rotate(${rotateAngle}deg)`);
+  clearInterval(rotateInterval);
   currentQuizz = selectedQuizz;
   document.querySelector(".questions").innerHTML = "";
   document.querySelector(".banner h1").innerHTML = selectedQuizz.data.title;
@@ -364,7 +383,7 @@ function validateLevelEntries () {
     } else {
       checkInitialQuizzValues(false, allLevelMinHit[i].classList[1], allLevelMinHit[i].parentNode.parentNode.classList[1]);
     }
-    if (Number(allLevelMinHit[i].value) === 0 && allLevelMinHit[i].value.lenght >= 1) {
+    if ((allLevelMinHit[i].value === "0") && (allLevelMinHit[i].value.lenght >= 1)) {
       validateMinValue = true;
     }
     if (validateURL(allLevelURLs[i].value) === true) {
@@ -390,14 +409,15 @@ function validateLevelEntries () {
       if (document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert.hidden`) === null) {
         document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert`).classList.add("hidden");
       }
-    }
-    console.log(validateMinValue);
+    } 
+  }
+  console.log(validateMinValue);
     if ((validateAll === Number(preQuizz.numberOfLevels) * 4) && validateMinValue === true) {
       registerLevelValues();
       postQuizz();
       alert("deu certo!");
-    } 
-  }
+    }
+    
 }
 
 function questionMaker() {
@@ -506,6 +526,10 @@ function grabAnswers() {
 }
 
 function quizzDone(response){  
+  document.querySelector(".loading-screen").classList.add("hidden");
+  document.querySelector(".loading-screen img").removeAttribute("style", `transform: rotate(${rotateAngle}deg)`);
+  clearInterval(rotateInterval);
+
   saveQuizzLocalStorage(response)
   const screen = document.querySelector(".screen3_3")
   screen.classList.add("hidden")
@@ -521,6 +545,9 @@ function quizzDone(response){
 }
   
 function postQuizz() {
+  document.querySelector(".loading-screen.hidden").classList.remove("hidden");
+  rotateInterval = setInterval(rotateImg, 150);
+  
   const post = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizzToSend)
   post.then(quizzDone)
   post.catch(() => alert("Algo deu errado"))
@@ -653,4 +680,12 @@ function saveQuizzLocalStorage(response) {
 function quizzSuccesfullyCreated(id) {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
   document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
+}
+
+function rotateImg () {
+  rotateAngle = rotateAngle + 45;
+  if (rotateAngle == 360) {
+      rotateAngle = 0;
+  }
+  document.querySelector(".loading-screen img").setAttribute("style", `transform: rotate(${rotateAngle}deg)`);
 }
