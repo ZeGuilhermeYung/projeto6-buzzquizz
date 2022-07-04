@@ -30,6 +30,7 @@ function renderQuizzOptions(info) {
 }
 
 function getQuizz(quizz) {
+  console.log(quizz);
   document.querySelector(".loading-screen.hidden").classList.remove("hidden");
   rotateInterval = setInterval(rotateImg, 150);
   const id = quizz.id;
@@ -679,6 +680,7 @@ function saveQuizzLocalStorage(response) {
 }
 function quizzSuccesfullyCreated(id) {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
+  document.querySelector(".acessar-quizz").id = id;
   document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
 }
 
