@@ -387,6 +387,9 @@ function validateLevelEntries () {
     if (allLevelMinHit[i].value === "0") {
       validateMinValue = true;
     }
+    if (allLevelMinHit[i].value === "") {
+      validateMinValue = false;
+    }
     if (validateURL(allLevelURLs[i].value) === true) {
       checkInitialQuizzValues(true, allLevelURLs[i].classList[1], allLevelURLs[i].parentNode.parentNode.classList[1]);
       validateAll++;
@@ -417,9 +420,9 @@ function validateLevelEntries () {
       registerLevelValues();
       postQuizz();
       alert("deu certo!");
-    }
-    
+    }  
 }
+
 
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
@@ -676,9 +679,9 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
-  quizzSuccesfullyCreated(quizz.id);
+  quizzSuccesfullyCreated();
 }
-function quizzSuccesfullyCreated(id) {   
+function quizzSuccesfullyCreated() {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
   document.querySelector(".acessar-quizz").id = id;
   document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
