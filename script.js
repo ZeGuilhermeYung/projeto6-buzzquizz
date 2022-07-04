@@ -713,8 +713,8 @@ function renderMyQuizzes (){
     const quizz = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${LocalQuizzes[i].id}`)
     quizz.then((info) => {
     myQuizzes.innerHTML += 
-    `<div id="${LocalQuizzes[i].id}" class="divImg" onclick="getQuizz(this)">
-      <img class="image2" src="${info.data.image}"><ion-icon name="trash-outline" class="delete"></ion-icon>
+    `<div id="${LocalQuizzes[i].id}" class="divImg myQuizzImg" onclick="getQuizz(this)">
+      <img class="image2" src="${info.data.image}">
       <p>${info.data.title}</p>
     </div>`
     })

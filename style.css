@@ -107,6 +107,7 @@ input{
     display: flex;
     margin-top: 12px;
     overflow-x: scroll;
+    overflow-y: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -157,6 +158,13 @@ input{
     height: 100%;
     object-fit: cover;
 }
+
+.myQuizzImg img {
+    width: 340px;
+    height: 180px;
+    object-fit: cover;
+}
+
 .divImg p{
     position: absolute;
     bottom: 0;
