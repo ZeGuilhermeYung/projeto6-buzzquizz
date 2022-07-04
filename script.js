@@ -49,7 +49,7 @@ function displayQuizz(selectedQuizz) {
   selectedQuizz.data.questions.sort(scrambleAlternatives);
   for (let i = 0; i < selectedQuizz.data.questions.length; i++) {
     document.querySelector(".questions").innerHTML += `
-            <div class="question-display ord${i + 1}">
+            <div class="question-display ord${i + 1} hidden">
                 <div class="question-title" style="background-color:${
                   selectedQuizz.data.questions[i].color
                 }">
@@ -65,6 +65,12 @@ function displayQuizz(selectedQuizz) {
     document.querySelector(".screen2.hidden").classList.remove("hidden");
   }
   document.querySelector(".banner").scrollIntoView();
+  setTimeout(() => {
+    document.querySelector(`.question-display.ord1.hidden`).classList.remove("hidden");
+    document.querySelector(`.question-display.ord1`).scrollIntoView();
+  }, 500);
+  
+
 }
 function displayAlternatives(alternatives, order) {
   alternatives.sort(scrambleAlternatives);
@@ -104,7 +110,8 @@ function answerQuestion(alternative, order, rightOrWrong) {
     alternative.classList.add("clicked");
     alternative.parentNode.classList.add("show-answer");
     setTimeout(() => {
-      if (document.querySelector(`.ord${order + 1}`) !== null) {
+      if (document.querySelector(`.ord${order + 1}.hidden`) !== null) {
+        document.querySelector(`.ord${order + 1}.hidden`).classList.remove("hidden");
         document.querySelector(`.ord${order + 1}`).scrollIntoView();
       } else {
         let finalScore = (rightAnswers / order) * 100;
@@ -205,12 +212,31 @@ function refreshConditionValues (screen, elementClass) {
       validateURL(document.querySelector(`.${screen} .${elementClass}.questionURL`).value)
     ];
   }
+  if ((screen === "levelUl" || screen === "screen3_3") && (document.activeElement.classList[2] === "level-title")) {
+    conditionValues = [
+      (document.querySelector(`.${elementClass}.level-title`).value.length >= 10)
+    ];
+  }
+  if ((screen === "levelUl" || screen === "screen3_3") && (document.activeElement.classList[2] === "level-minimum-hit")) {
+    conditionValues = [0,
+      (Number(document.querySelector(`.${elementClass}.level-minimum-hit`).value) >= 0 && Number(document.querySelector(`.${elementClass}.level-minimum-hit`).value) <= 100)
+    ];
+  }
+  if ((screen === "levelUl" || screen === "screen3_3") && (document.activeElement.classList[2] === "level-url")) {
+    conditionValues = [0, 0,
+      validateURL(document.querySelector(`.${screen} .${elementClass}.level-url`).value)
+    ];
+  }
+  if ((screen === "levelUl" || screen === "screen3_3") && (document.activeElement.classList[2] === "level-description")) {
+    conditionValues = [0, 0, 0,
+      (document.querySelector(`.${elementClass}.level-description`).value.length >= 30)
+    ];
+  }
 }
 document.querySelector(".creatingQuizzForms").addEventListener("keydown", function(e) {
   if (e.key === "Tab") {
     let screenClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[0];
     let ordUlClass = document.querySelector(`.${document.activeElement.classList[1]}`).parentNode.parentNode.classList[1];
-    console.log(screenClass, document.activeElement.classList[1]);
     refreshConditionValues(screenClass, document.activeElement.classList[1]);
     let conditionValue;
     for (let i = 0; i < conditionValues.length; i++) {
@@ -218,9 +244,7 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
         conditionValue = conditionValues[i];
       }
     }
-    console.log(conditionValues.length); 
     checkInitialQuizzValues(conditionValue, document.activeElement.classList[1], ordUlClass);
-    console.log(conditionValue, document.activeElement.classList[1], screenClass);
   }
   if (e.key === "Enter") {
     if (document.querySelector(".screen3.hidden") === null) {
@@ -234,7 +258,6 @@ document.querySelector(".creatingQuizzForms").addEventListener("keydown", functi
   });
 
 function checkInitialQuizzValues(condition, type, ulClass) {
-  console.log(condition, type, ulClass);
   if (condition === false && document.querySelector(`.${ulClass} .${type}-alert.hidden`) !== null) {
     document.querySelector(`.${ulClass} .${type}-alert.hidden`).classList.remove("hidden");
   }
@@ -247,13 +270,11 @@ function validateInitialQuizzValues(submit, className) {
   let screenClass = submit.parentNode.classList[0];
 
   refreshConditionValues(screenClass, className);
-  console.log(screenClass);
   let validateAll = 0;
   let ulClass = document.querySelector(`.${className}`).parentNode.parentNode.classList[0];
   for (let i = 0; i < conditionValues.length; i++) {
     if (conditionValues[i] === true) {
       checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${className}`)[i].classList[1], ulClass);
-      console.log((conditionValues[i], document.querySelectorAll(`.${ulClass} .${className}`)[i].classList[1]), ulClass);
       validateAll++;
     } else {
       checkInitialQuizzValues(conditionValues[i], document.querySelectorAll(`.${ulClass} .${className}`)[i].classList[1], ulClass);
@@ -322,6 +343,63 @@ function validateQuestionsAnswers() {
   }
 }
 
+function validateLevelEntries () {
+  let allLevelTitles = document.querySelectorAll(".levelVal.level-title");
+  let allLevelMinHit = document.querySelectorAll(".levelVal.level-minimum-hit");
+  let allLevelURLs = document.querySelectorAll(".levelVal.level-url");
+  let allLevelDescriptions = document.querySelectorAll(".levelVal.level-description");
+  let validateAll = 0;
+  let validateMinValue = false;
+
+  for (let i = 0; i < preQuizz.numberOfLevels; i++) {
+    if (allLevelTitles[i].value.length >= 10) {
+      checkInitialQuizzValues(true, allLevelTitles[i].classList[1], allLevelTitles[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allLevelTitles[i].classList[1], allLevelTitles[i].parentNode.parentNode.classList[1]);
+    }
+    if (Number(allLevelMinHit[i].value) >= 0 && Number(allLevelMinHit[i].value) <= 100) {
+      checkInitialQuizzValues(true, allLevelMinHit[i].classList[1], allLevelMinHit[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allLevelMinHit[i].classList[1], allLevelMinHit[i].parentNode.parentNode.classList[1]);
+    }
+    if (Number(allLevelMinHit[i].value) === 0 && allLevelMinHit[i].value.lenght >= 1) {
+      validateMinValue = true;
+    }
+    if (validateURL(allLevelURLs[i].value) === true) {
+      checkInitialQuizzValues(true, allLevelURLs[i].classList[1], allLevelURLs[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allLevelURLs[i].classList[1], allLevelURLs[i].parentNode.parentNode.classList[1]);
+    }
+    if (allLevelDescriptions[i].value.length >= 30) {
+      checkInitialQuizzValues(true, allLevelDescriptions[i].classList[1], allLevelDescriptions[i].parentNode.parentNode.classList[1]);
+      validateAll++;
+    } else {
+      checkInitialQuizzValues(false, allLevelDescriptions[i].classList[1], allLevelDescriptions[i].parentNode.parentNode.classList[1]);
+    }
+    if (validateMinValue === false) {
+      if (document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert.hidden`) !== null) {
+        document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert.hidden`).classList.remove("hidden");
+        setTimeout(() => {
+        document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert`).scrollIntoView();
+        }, 500);
+      } 
+    } else {
+      if (document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert.hidden`) === null) {
+        document.querySelector(`.validationAll-alert.level-${i}-minimum-hit-alert`).classList.add("hidden");
+      }
+    }
+    console.log(validateMinValue);
+    if ((validateAll === Number(preQuizz.numberOfLevels) * 4) && validateMinValue === true) {
+      registerLevelValues();
+      postQuizz();
+      alert("deu certo!");
+    } 
+  }
+}
+
 function questionMaker() {
   const quizzDetails = document.querySelectorAll(".preQuizz");
   
@@ -333,8 +411,6 @@ function questionMaker() {
   quizzToSend.title = preQuizz.title
   quizzToSend.image = preQuizz.image
   
-  console.log(preQuizz.title)
-
   document.querySelector(".screen3").classList.add("hidden");
   document.querySelector(".screen3_2.hidden").classList.remove("hidden");
   
@@ -461,11 +537,16 @@ function levelMaker() {
     document.querySelector(".thirdUl").innerHTML += `
         <h1>Nível ${i + 1}<ion-icon class="iconLevel${i + 1}" name="create"></ion-icon></h1>
         <div class="dropdownLevel closed">
-          <ul>
-              <li><input class="level-${i}-title" type="text" placeholder="Título do nível" required></li>
-              <li><input class="level-${i}-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
-              <li><input class="level-${i}-url" type="text" placeholder="URL da imagem do nível" required></li>
-              <li><input class="level-${i}-description" type="text" placeholder="Descrição do nível" required></li>
+          <ul class="levelUl levelUl${i}">
+              <li><input class="levelVal level-${i}-title level-title" type="text" placeholder="Título do nível" required></li>
+              <h3 class="validation-alert level-${i}-title-alert hidden">O título do nível deve ter no mínimo 10 caracteres</h3>
+              <li><input class="levelVal level-${i}-minimum-hit level-minimum-hit" type="text" placeholder="% de acerto mínima" required></li>
+              <h3 class="validation-alert level-${i}-minimum-hit-alert hidden">Como é porcentagem, deverá ser um número entre 0 e 100</h3>
+              <h3 class="validationAll-alert level-${i}-minimum-hit-alert hidden">Pelo menos, um dos valores mínimos deverá ser igual a zero!</h3>
+              <li><input class="levelVal level-${i}-url level-url" type="text" placeholder="URL da imagem do nível" required></li>
+              <h3 class="validation-alert level-${i}-url-alert hidden">O valor informado não é uma URL válida</h3>
+              <li><input class="levelVal level-${i}-description level-description" type="text" placeholder="Descrição do nível" required></li>
+              <h3 class="validation-alert level-${i}-description-alert hidden">A descrição do nível deve ter no mínimo 30 caracteres</h3>
           </ul> 
         </div>
         `;
@@ -489,7 +570,7 @@ function registerLevelValues() {
     const level = {
       title: document.querySelector(`.level-${i}-title`).value,
       minValue: parseInt(document.querySelector(`.level-${i}-minimum-hit`).value),
-      image: url(document.querySelector(`.level-${i}-url`).value),
+      image: document.querySelector(`.level-${i}-url`).value,
       text: document.querySelector(`.level-${i}-description`).value,
     };
 
@@ -567,9 +648,9 @@ function saveQuizzLocalStorage(response) {
   });
 
   localStorage.setItem("quizzes", JSON.stringify(valuesLocalStorage));
-  quizzSuccesfullyCreated();
+  quizzSuccesfullyCreated(quizz.id);
 }
-function quizzSuccesfullyCreated() {   
+function quizzSuccesfullyCreated(id) {   
   document.querySelector(".screen3_4 .divImg img").src = preQuizz.image;
   document.querySelector(".screen3_4 .divImg p").innerHTML = preQuizz.title; 
 }

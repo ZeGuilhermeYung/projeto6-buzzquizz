@@ -191,6 +191,7 @@ input{
     display: flex;
     align-items: center;
     justify-content: center;
+    word-break: break-word;
 }
 
 .banner h1 {
@@ -215,6 +216,9 @@ input{
     flex-direction: column;
     align-items: center;
 }
+.question-display.hidden {
+    display: none;
+}
 .question-title {
     width: 688px;
     height: 138px;
@@ -228,6 +232,7 @@ input{
     line-height: 27px;
     color: #FFFFFF;
     text-align: center;
+    word-break: break-word;
 }
 .answer-options {
     width: 688px;
@@ -276,6 +281,7 @@ input{
     display: flex;
     align-items: center;
     color: #000000;
+    word-break: break-word;
 }
 .alternative:hover h3 {
     text-decoration: underline;
@@ -313,6 +319,7 @@ input{
     font-size: 23px;
     line-height: 27px;
     color: #FFFFFF;
+    word-break: break-word;
 }
 .image-text {
     width: 100%;
@@ -334,6 +341,7 @@ input{
     font-size: 19px;
     line-height: 25px;
     color: #484848;
+    word-break: break-word;
 }
 .restart-quizz {
     width: 260.38px;
